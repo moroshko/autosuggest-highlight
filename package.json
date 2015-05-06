@@ -1,0 +1,44 @@
+{
+  "name": "autosuggest-highlight",
+  "version": "1.0.0",
+  "description": "Find characters to highlight in autosuggest components",
+  "main": "dist/autosuggest-highlight.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moroshko/autosuggest-highlight.git"
+  },
+  "author": "Misha Moroshko <michael.moroshko@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/moroshko/autosuggest-highlight/issues"
+  },
+  "homepage": "https://github.com/moroshko/autosuggest-highlight",
+  "scripts": {
+    "lint": "jscs src --verbose --max-errors=3 --reporter=inline --esnext",
+    "test": "mocha src/test --compilers js:babel/register",
+    "dist": "npm run lint && npm test && babel src/autosuggest-highlight.js -o dist/autosuggest-highlight.js --stage 0"
+  },
+  "keywords": [
+    "autosuggest",
+    "autocomplete",
+    "auto suggest",
+    "auto complete",
+    "highlight autosuggest",
+    "highlight autocomplete",
+    "highlight auto suggest",
+    "highlight auto complete",
+    "autosuggest highlight",
+    "autocomplete highlight",
+    "auto suggest highlight",
+    "auto complete highlight"
+  ],
+  "dependencies": {
+    "string.prototype.repeat": "^0.2.0"
+  },
+  "devDependencies": {
+    "babel": "^5.2.15",
+    "chai": "^2.3.0",
+    "jscs": "^1.13.1",
+    "mocha": "^2.2.4"
+  },
+  "license": "MIT"
+}
