@@ -1,3 +1,6 @@
+[![Build Status][status-image]][status-url]
+[![NPM Version][npm-image]][npm-url]
+
 # Autosuggest Highlight
 
 Find characters to highlight in autosuggest components.
@@ -44,3 +47,8 @@ npm test
 ## License
 
 [MIT](http://moroshko.mit-license.org)
+
+[status-image]: https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg
+[status-url]: https://codeship.com/projects/78168
+[npm-image]: https://img.shields.io/npm/v/autosuggest-highlight.svg
+[npm-url]: https://npmjs.org/package/autosuggest-highlight
