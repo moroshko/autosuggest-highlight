@@ -32,7 +32,7 @@
     "auto complete highlight"
   ],
   "dependencies": {
-    "string.prototype.repeat": "^0.2.0"
+    "lodash.repeat": "^3.0.0"
   },
   "devDependencies": {
     "babel": "^5.2.15",

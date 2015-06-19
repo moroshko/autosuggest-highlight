@@ -1,6 +1,6 @@
 'use strict';
 
-require('string.prototype.repeat');
+import repeat from 'lodash.repeat';
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 function escapeRegexCharacters(str) {
@@ -30,7 +30,7 @@ export default function(text, query) {
       // Replace what we just found with spaces so we don't find it again
       text =
         text.substring(0, index) +
-        ' '.repeat(queryWord.length) +
+        repeat(' ', queryWord.length) +
         text.substring(index + queryWord.length);
     }
 
