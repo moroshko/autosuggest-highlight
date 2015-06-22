@@ -6,11 +6,11 @@ import { parse } from '../autosuggest-highlight';
 const testCases = [
   {
     it: 'supports no matches',
-    input: [
+    params: [
       'Hello world',
       []
     ],
-    output: [
+    result: [
       {
         text: 'Hello world',
         highlight: false
@@ -19,11 +19,11 @@ const testCases = [
   },
   {
     it: 'highlights a single match',
-    input: [
+    params: [
       'Hello world',
       [[0, 4]]
     ],
-    output: [
+    result: [
       {
         text: 'Hell',
         highlight: true
@@ -36,11 +36,11 @@ const testCases = [
   },
   {
     it: 'highlights multiple matches',
-    input: [
+    params: [
       'Hello world',
       [[2, 4], [6, 8]]
     ],
-    output: [
+    result: [
       {
         text: 'He',
         highlight: false
@@ -67,6 +67,6 @@ const testCases = [
 
 testCases.forEach(testCase => {
   it(testCase.it, () => {
-    expect(parse.apply(null, testCase.input)).to.deep.equal(testCase.output);
+    expect(parse(...testCase.params)).to.deep.equal(testCase.result);
   });
 });
