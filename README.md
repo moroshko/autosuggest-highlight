@@ -37,7 +37,45 @@ var text = 'Mill Park 3082 VIC';
 var query = 'mill 308';
 
 var matches = highlight.match(text, query);
-// => [[0, 4], [10, 13]]
+
+// Returns:
+[[0, 4], [10, 13]]
+```
+
+#### parse
+
+The function gets `text` and `matches` (returned from `match`) and returns an array of string parts.
+
+Each string part contains the `text` and a `highlight` flag indicating whether it matches.
+
+For example:
+
+```js
+var parts = highlight.parse('Hello world', [[2,4], [6,8]]);
+
+// Returns:
+[
+  {
+    text: 'He',
+    highlight: false
+  },
+  {
+    text: 'll',
+    highlight: true
+  },
+  {
+    text: 'o ',
+    highlight: false
+  },
+  {
+    text: 'wo',
+    highlight: true
+  },
+  {
+    text: 'rld',
+    highlight: false
+  }
+]
 ```
 
 ## Running Tests
