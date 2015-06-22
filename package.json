@@ -14,8 +14,8 @@
   "homepage": "https://github.com/moroshko/autosuggest-highlight",
   "scripts": {
     "lint": "jscs src --verbose --max-errors=3 --reporter=inline --esnext",
-    "test": "mocha src/test --compilers js:babel/register",
-    "dist": "npm run lint && npm test && babel src/autosuggest-highlight.js -o dist/autosuggest-highlight.js --stage 0"
+    "test": "npm run lint && mocha src/test --compilers js:babel/register",
+    "dist": "npm run lint && npm test && babel src --out-dir dist --stage 0 && rm -rf dist/test"
   },
   "keywords": [
     "autosuggest",
@@ -32,7 +32,7 @@
     "auto complete highlight"
   ],
   "dependencies": {
-    "string.prototype.repeat": "^0.2.0"
+    "lodash.repeat": "^3.0.0"
   },
   "devDependencies": {
     "babel": "^5.2.15",

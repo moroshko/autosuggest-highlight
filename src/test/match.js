@@ -1,7 +1,7 @@
 'use strict';
 
 import { expect } from 'chai';
-import highlight from '../autosuggest-highlight';
+import { match } from '../autosuggest-highlight';
 
 describe('autosuggest-highlight', function() {
   it('should not highlight in the middle of a word', function() {
@@ -9,7 +9,7 @@ describe('autosuggest-highlight', function() {
     const query = 'am';
     const result = [];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight the first match', function() {
@@ -17,7 +17,7 @@ describe('autosuggest-highlight', function() {
     const query = 'vic';
     const result = [[11, 14]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight multiple words', function() {
@@ -25,7 +25,7 @@ describe('autosuggest-highlight', function() {
     const query = 'ch 3 a';
     const result = [[0, 2], [15, 16], [20, 21]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight multiple words regardless or order', function() {
@@ -33,7 +33,7 @@ describe('autosuggest-highlight', function() {
     const query = 'a v c 3';
     const result = [[0, 1], [11, 12], [15, 16], [20, 21]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should ignore whitespaces', function() {
@@ -41,7 +41,7 @@ describe('autosuggest-highlight', function() {
     const query = '   a \t\tv  \t   c      3\t\t';
     const result = [[0, 1], [11, 12], [15, 16], [20, 21]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should ignore spaces', function() {
@@ -49,7 +49,7 @@ describe('autosuggest-highlight', function() {
     const query = 'cheltenham ';
     const result = [[0, 10]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight two consecutive words', function() {
@@ -57,7 +57,7 @@ describe('autosuggest-highlight', function() {
     const query = 'cheltenham vic';
     const result = [[0, 10], [11, 14]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight &', function() {
@@ -65,7 +65,7 @@ describe('autosuggest-highlight', function() {
     const query = 'port macquarie & mid';
     const result = [[0, 4], [5, 14], [15, 16], [17, 20]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight -', function() {
@@ -73,7 +73,7 @@ describe('autosuggest-highlight', function() {
     const query = 'ngaanyatjarra-giles wa';
     const result = [[0, 19], [20, 22]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight ,', function() {
@@ -81,7 +81,7 @@ describe('autosuggest-highlight', function() {
     const query = 'wollongong, il';
     const result = [[0, 11], [12, 14]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should highlight ( and )', function() {
@@ -89,7 +89,7 @@ describe('autosuggest-highlight', function() {
     const query = 'cocos (keeling)';
     const result = [[12, 17], [18, 27]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 
   it('should not highlight the same char twice', function() {
@@ -97,6 +97,6 @@ describe('autosuggest-highlight', function() {
     const query = 'north n';
     const result = [[0, 5], [11, 12]];
 
-    expect(highlight(text, query)).to.deep.equal(result);
+    expect(match(text, query)).to.deep.equal(result);
   });
 });

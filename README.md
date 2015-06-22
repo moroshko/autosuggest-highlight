@@ -14,13 +14,15 @@ npm install autosuggest-highlight --save
 ## Basic Usage
 
 ```js
-import highlight from 'autosuggest-highlight';
+var highlight = require('autosuggest-highlight');
 
-console.log(highlight('North Melbourne VIC 3051', 'melbourne no'));
+var matches = highlight.match('North Melbourne VIC 3051', 'melbourne no');
 // => [[0, 2], [6, 15]]
 ```
 
 ### API
+
+#### match
 
 The function gets `text` and `query` and returns an array of pairs.
 
@@ -31,11 +33,49 @@ For example:
 ```js
 //            012345678901234567       (text indices)
 //            vvvv      vvv            (characters to highlight)
-const text = 'Mill Park 3082 VIC';
-const query = 'mill 308';
+var text = 'Mill Park 3082 VIC';
+var query = 'mill 308';
 
-console.log(highlight(text, query));
-// => [[0, 4], [10, 13]]
+var matches = highlight.match(text, query);
+
+// Returns:
+[[0, 4], [10, 13]]
+```
+
+#### parse
+
+The function gets `text` and `matches` (returned from `match`) and returns an array of string parts.
+
+Each string part contains the `text` and a `highlight` flag indicating whether it matches.
+
+For example:
+
+```js
+var parts = highlight.parse('Hello world', [[2,4], [6,8]]);
+
+// Returns:
+[
+  {
+    text: 'He',
+    highlight: false
+  },
+  {
+    text: 'll',
+    highlight: true
+  },
+  {
+    text: 'o ',
+    highlight: false
+  },
+  {
+    text: 'wo',
+    highlight: true
+  },
+  {
+    text: 'rld',
+    highlight: false
+  }
+]
 ```
 
 ## Running Tests
