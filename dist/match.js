@@ -3,9 +3,12 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-'use strict';
 
-require('string.prototype.repeat');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _lodashRepeat = require('lodash.repeat');
+
+var _lodashRepeat2 = _interopRequireDefault(_lodashRepeat);
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 function escapeRegexCharacters(str) {
@@ -34,7 +37,7 @@ exports['default'] = function (text, query) {
       result.push([index, index + queryWord.length]);
 
       // Replace what we just found with spaces so we don't find it again
-      text = text.substring(0, index) + ' '.repeat(queryWord.length) + text.substring(index + queryWord.length);
+      text = text.slice(0, index) + (0, _lodashRepeat2['default'])(' ', queryWord.length) + text.slice(index + queryWord.length);
     }
 
     return result;

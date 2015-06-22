@@ -3,7 +3,7 @@
 
 # Autosuggest Highlight
 
-Find characters to highlight in autosuggest components.
+This library contains utilities for highlighting in autosuggest components.
 
 ## Installation
 
@@ -11,71 +11,67 @@ Find characters to highlight in autosuggest components.
 npm install autosuggest-highlight --save
 ```
 
-## Basic Usage
+Then, in your app:
 
 ```js
 var highlight = require('autosuggest-highlight');
-
-var matches = highlight.match('North Melbourne VIC 3051', 'melbourne no');
-// => [[0, 2], [6, 15]]
 ```
 
-### API
+## API
 
-#### match
+* [`match(text, query)`](#match)
+* [`parse(text, matches)`](#parse)
 
-The function gets `text` and `query` and returns an array of pairs.
+<a name="match"></a>
+### match(text, query)
 
-Every `[a, b]` pair means that `text.substring(a, b)` should be highlighted.
+This function calculates the highlighting bits in `text` based on the `query`.
+
+It returns an array of pairs. Every `[a, b]` pair means that `text.slice(a, b)` should be highlighted.
 
 For example:
 
 ```js
-//            012345678901234567       (text indices)
-//            vvvv      vvv            (characters to highlight)
+//          012345678901234567       (text indices)
+//          vvvv      vvv            (characters to highlight)
 var text = 'Mill Park 3082 VIC';
 var query = 'mill 308';
 
 var matches = highlight.match(text, query);
 
 // Returns:
-[[0, 4], [10, 13]]
+// [[0, 4], [10, 13]]
 ```
 
-#### parse
+<a name="parse"></a>
+### parse(text, matches)
 
-The function gets `text` and `matches` (returned from `match`) and returns an array of string parts.
+This function breaks the given `text` to parts according to `matches` (the output of [`match()`](#match)).
 
-Each string part contains the `text` and a `highlight` flag indicating whether it matches.
-
-For example:
+Best way to explain how it works is using an example:
 
 ```js
-var parts = highlight.parse('Hello world', [[2,4], [6,8]]);
+var parts = highlight.parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 
 // Returns:
-[
-  {
-    text: 'He',
-    highlight: false
-  },
-  {
-    text: 'll',
-    highlight: true
-  },
-  {
-    text: 'o ',
-    highlight: false
-  },
-  {
-    text: 'wo',
-    highlight: true
-  },
-  {
-    text: 'rld',
-    highlight: false
-  }
-]
+// [
+//   {
+//     text: 'Mill',
+//     highlight: true
+//   },
+//   {
+//     text: ' Park ',
+//     highlight: false
+//   },
+//   {
+//     text: '308',
+//     highlight: true
+//   },
+//   {
+//     text: '2 VIC',
+//     highlight: false
+//   }
+// ]
 ```
 
 ## Running Tests

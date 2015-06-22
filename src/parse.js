@@ -12,7 +12,7 @@ export default (text, matches) => {
     if (matches[0][0] > 0) {
       rules.push({
         highlight: false,
-        text: text.substring(0, matches[0][0])
+        text: text.slice(0, matches[0][0])
       });
     }
   }
@@ -20,18 +20,18 @@ export default (text, matches) => {
   matches.forEach(([startIndex, endIndex], i) => {
     rules.push({
       highlight: true,
-      text: text.substring(startIndex, endIndex)
+      text: text.slice(startIndex, endIndex)
     });
 
     if (i === matches.length - 1 && endIndex < text.length) {
       rules.push({
         highlight: false,
-        text: text.substring(endIndex, text.length)
+        text: text.slice(endIndex, text.length)
       });
     } else if (endIndex < matches[i + 1][0]) {
       rules.push({
         highlight: false,
-        text: text.substring(endIndex, matches[i + 1][0])
+        text: text.slice(endIndex, matches[i + 1][0])
       });
     }
   });

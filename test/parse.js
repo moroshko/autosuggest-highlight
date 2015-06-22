@@ -1,7 +1,7 @@
 'use strict';
 
 import { expect } from 'chai';
-import { parse } from '../autosuggest-highlight';
+import { parse } from '../src/autosuggest-highlight';
 
 const testCases = [
   {
@@ -35,7 +35,7 @@ const testCases = [
     ]
   },
   {
-    it: 'highlights multiple matches',
+    it: 'highlights multiple non-consecutive matches',
     params: [
       'Hello world',
       [[2, 4], [6, 8]]
@@ -62,11 +62,38 @@ const testCases = [
         highlight: false
       }
     ]
+  },
+  {
+    it: 'highlights multiple consecutive matches',
+    params: [
+      'Hello world',
+      [[2, 4], [4, 8]]
+    ],
+    result: [
+      {
+        text: 'He',
+        highlight: false
+      },
+      {
+        text: 'll',
+        highlight: true
+      },
+      {
+        text: 'o wo',
+        highlight: true
+      },
+      {
+        text: 'rld',
+        highlight: false
+      }
+    ]
   }
 ];
 
-testCases.forEach(testCase => {
-  it(testCase.it, () => {
-    expect(parse(...testCase.params)).to.deep.equal(testCase.result);
+describe('parse()', () => {
+  testCases.forEach(testCase => {
+    it(testCase.it, () => {
+      expect(parse(...testCase.params)).to.deep.equal(testCase.result);
+    });
   });
 });

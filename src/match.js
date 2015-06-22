@@ -28,10 +28,9 @@ export default function(text, query) {
       result.push([index, index + queryWord.length]);
 
       // Replace what we just found with spaces so we don't find it again
-      text =
-        text.substring(0, index) +
-        repeat(' ', queryWord.length) +
-        text.substring(index + queryWord.length);
+      text = text.slice(0, index) +
+             repeat(' ', queryWord.length) +
+             text.slice(index + queryWord.length);
     }
 
     return result;
