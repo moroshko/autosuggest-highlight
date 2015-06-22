@@ -21,7 +21,7 @@ const testCases = [
     should: 'highlight a single match',
     input: [
       'Hello world',
-      [[0,4]]
+      [[0, 4]]
     ],
     output: [
       {
@@ -38,7 +38,7 @@ const testCases = [
     should: 'highlight a multiple matches',
     input: [
       'Hello world',
-      [[2,4], [6,8]]
+      [[2, 4], [6, 8]]
     ],
     output: [
       {
