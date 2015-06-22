@@ -5,7 +5,7 @@ import { parse } from '../autosuggest-highlight';
 
 const testCases = [
   {
-    should: 'support no matches',
+    it: 'supports no matches',
     input: [
       'Hello world',
       []
@@ -18,7 +18,7 @@ const testCases = [
     ]
   },
   {
-    should: 'highlight a single match',
+    it: 'highlights a single match',
     input: [
       'Hello world',
       [[0, 4]]
@@ -35,7 +35,7 @@ const testCases = [
     ]
   },
   {
-    should: 'highlight a multiple matches',
+    it: 'highlights multiple matches',
     input: [
       'Hello world',
       [[2, 4], [6, 8]]
@@ -66,7 +66,7 @@ const testCases = [
 ];
 
 testCases.forEach(testCase => {
-  it('should ' + testCase.should, () => {
+  it(testCase.it, () => {
     expect(parse.apply(null, testCase.input)).to.deep.equal(testCase.output);
   });
 });
