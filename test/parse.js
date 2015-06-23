@@ -18,7 +18,7 @@ const testCases = [
     ]
   },
   {
-    it: 'highlights a single match',
+    it: 'highlights a single partial match',
     params: [
       'Hello world',
       [[0, 4]]
@@ -31,6 +31,19 @@ const testCases = [
       {
         text: 'o world',
         highlight: false
+      }
+    ]
+  },
+  {
+    it: 'highlights a single complete match',
+    params: [
+      'Hello world',
+      [[0, 11]]
+    ],
+    result: [
+      {
+        text: 'Hello world',
+        highlight: true
       }
     ]
   },
