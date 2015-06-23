@@ -34,11 +34,13 @@ exports['default'] = function (text, matches) {
       text: text.slice(startIndex, endIndex)
     });
 
-    if (i === matches.length - 1 && endIndex < text.length) {
-      rules.push({
-        highlight: false,
-        text: text.slice(endIndex, text.length)
-      });
+    if (i === matches.length - 1) {
+      if (endIndex < text.length) {
+        rules.push({
+          highlight: false,
+          text: text.slice(endIndex, text.length)
+        });
+      }
     } else if (endIndex < matches[i + 1][0]) {
       rules.push({
         highlight: false,

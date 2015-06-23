@@ -1,6 +1,6 @@
 {
   "name": "autosuggest-highlight",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Utilities for highlighting in autosuggest components",
   "main": "dist/autosuggest-highlight.js",
   "repository": {
