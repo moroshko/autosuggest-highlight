@@ -1,6 +1,6 @@
 {
   "name": "autosuggest-highlight",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Utilities for highlighting in autosuggest components",
   "main": "dist/autosuggest-highlight.js",
   "repository": {
@@ -15,7 +15,8 @@
   "scripts": {
     "lint": "jscs src --verbose --max-errors=3 --reporter=inline --esnext",
     "test": "npm run lint && mocha test --opts mocha.opts",
-    "build": "npm run lint && npm test && babel src --out-dir dist"
+    "standalone": "webpack --config webpack.standalone.config.js",
+    "build": "npm run lint && npm test && babel src --out-dir dist && npm run standalone"
   },
   "keywords": [
     "autosuggest",
@@ -36,9 +37,13 @@
   },
   "devDependencies": {
     "babel": "^5.6.2",
+    "babel-core": "^5.6.7",
+    "babel-loader": "^5.2.2",
     "chai": "^3.0.0",
     "jscs": "^1.13.1",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.12"
   },
   "license": "MIT"
 }
