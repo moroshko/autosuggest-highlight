@@ -14,8 +14,13 @@ var _parse = require('./parse');
 
 var _parse2 = _interopRequireDefault(_parse);
 
+var _parseHTML = require('./parseHTML');
+
+var _parseHTML2 = _interopRequireDefault(_parseHTML);
+
 exports['default'] = {
   match: _match2['default'],
-  parse: _parse2['default']
+  parse: _parse2['default'],
+  parseHTML: _parseHTML2['default']
 };
 module.exports = exports['default'];

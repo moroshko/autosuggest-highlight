@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/moroshko/autosuggest-highlight",
   "scripts": {
-    "lint": "jscs src --verbose --max-errors=3 --reporter=inline --esnext",
+    "lint": "eslint src test webpack.standalone.config.js",
     "test": "npm run lint && mocha test --opts mocha.opts",
     "standalone": "webpack --config webpack.standalone.config.js",
     "build": "npm run lint && npm test && babel src --out-dir dist && npm run standalone"
@@ -33,17 +33,18 @@
     "auto complete highlight"
   ],
   "dependencies": {
-    "lodash.repeat": "^3.0.0"
+    "lodash.repeat": "^3.0.1"
   },
   "devDependencies": {
-    "babel": "^5.6.2",
-    "babel-core": "^5.6.7",
-    "babel-loader": "^5.2.2",
-    "chai": "^3.0.0",
-    "jscs": "^1.13.1",
-    "mocha": "^2.2.5",
-    "node-libs-browser": "^0.5.2",
-    "webpack": "^1.9.12"
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
+    "chai": "^3.2.0",
+    "eslint": "^1.5.0",
+    "mocha": "^2.3.2",
+    "node-libs-browser": "^0.5.3",
+    "webpack": "^1.12.2"
   },
   "license": "MIT"
 }

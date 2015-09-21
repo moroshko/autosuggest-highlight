@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(factory);
+		define([], factory);
 	else if(typeof exports === 'object')
 		exports["AutosuggestHighlight"] = factory();
 	else
@@ -70,9 +70,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _parse2 = _interopRequireDefault(_parse);
 
+	var _parseHTML = __webpack_require__(5);
+
+	var _parseHTML2 = _interopRequireDefault(_parseHTML);
+
 	exports['default'] = {
 	  match: _match2['default'],
-	  parse: _parse2['default']
+	  parse: _parse2['default'],
+	  parseHTML: _parseHTML2['default']
 	};
 	module.exports = exports['default'];
 
@@ -137,20 +142,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * lodash 3.0.0 (Custom Build) <https://lodash.com/>
+	 * lodash 3.0.1 (Custom Build) <https://lodash.com/>
 	 * Build: `lodash modern modularize exports="npm" -o ./`
 	 * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
 	var baseToString = __webpack_require__(3);
 
-	/** Native method references. */
-	var floor = Math.floor;
-
 	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeIsFinite = global.isFinite;
+	var nativeFloor = Math.floor,
+	    nativeIsFinite = global.isFinite;
 
 	/**
 	 * Repeats the given string `n` times.
@@ -185,7 +188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (n % 2) {
 	      result += string;
 	    }
-	    n = floor(n / 2);
+	    n = nativeFloor(n / 2);
 	    string += string;
 	  } while (n);
 
@@ -201,16 +204,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * lodash 3.0.0 (Custom Build) <https://lodash.com/>
+	 * lodash 3.0.1 (Custom Build) <https://lodash.com/>
 	 * Build: `lodash modern modularize exports="npm" -o ./`
 	 * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
-	 * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
 
 	/**
-	 * Converts `value` to a string if it is not one. An empty string is returned
+	 * Converts `value` to a string if it's not one. An empty string is returned
 	 * for `null` or `undefined` values.
 	 *
 	 * @private
@@ -218,9 +221,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {string} Returns the string.
 	 */
 	function baseToString(value) {
-	  if (typeof value == 'string') {
-	    return value;
-	  }
 	  return value == null ? '' : (value + '');
 	}
 
@@ -231,15 +231,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
 
-	exports['default'] = function (text, matches) {
+	exports["default"] = function (text, matches) {
 	  var rules = [];
 
 	  if (matches.length === 0) {
@@ -283,6 +283,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 
 	  return rules;
+	};
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	exports['default'] = function (text, tag) {
+	  var regex = RegExp('<' + tag + '>(.*?)</' + tag + '>');
+
+	  return text.split(regex).map(function (text, index) {
+	    return {
+	      text: text,
+	      highlight: index % 2 === 1
+	    };
+	  }).filter(function (obj) {
+	    return obj.text !== '';
+	  });
 	};
 
 	module.exports = exports['default'];
