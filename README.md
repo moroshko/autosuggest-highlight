@@ -21,6 +21,7 @@ var highlight = require('autosuggest-highlight');
 
 * [`match(text, query)`](#match)
 * [`parse(text, matches)`](#parse)
+* [`parseHTML(text, tag)`](#parseHTML)
 
 <a name="match"></a>
 ### match(text, query)
@@ -70,6 +71,33 @@ var parts = highlight.parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 //   {
 //     text: '2 VIC',
 //     highlight: false
+//   }
+// ]
+```
+
+<a name="parseHTML"></a>
+### parseHTML(text, tag)
+
+This function breaks the given `text` to parts according to the given `tag`.
+
+Best way to explain how it works is using an example:
+
+```js
+var parts = highlight.parseHTML('<strong>Mill Park</strong> 3082 <strong>VIC</strong>', 'strong');
+
+// Returns:
+// [
+//   {
+//     text: 'Mill Park',
+//     highlight: true
+//   },
+//   {
+//     text: ' 3082 ',
+//     highlight: false
+//   },
+//   {
+//     text: 'VIC',
+//     highlight: true
 //   }
 // ]
 ```
