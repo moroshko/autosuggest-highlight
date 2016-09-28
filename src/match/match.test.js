@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { match } from '../src/autosuggest-highlight';
+import match from './match';
 
-describe('match()', () => {
+describe('match', () => {
   it('should not highlight in the middle of a word', () => {
     const text = 'Cheltenham VIC 3192 AU';
     const query = 'am';

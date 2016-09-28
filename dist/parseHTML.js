@@ -1,11 +1,11 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports['default'] = function (text, tag) {
-  var regex = RegExp('<' + tag + '>(.*?)</' + tag + '>');
+exports.default = function (text, tag) {
+  var regex = new RegExp('<' + tag + '>(.*?)</' + tag + '>');
 
   return text.split(regex).map(function (text, index) {
     return {
@@ -16,5 +16,3 @@ exports['default'] = function (text, tag) {
     return obj.text !== '';
   });
 };
-
-module.exports = exports['default'];

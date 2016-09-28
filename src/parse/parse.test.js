@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { parse } from '../src/autosuggest-highlight';
+import parse from './parse';
 
 const testCases = [
   {
@@ -101,7 +101,7 @@ const testCases = [
   }
 ];
 
-describe('parse()', () => {
+describe('parse', () => {
   testCases.forEach(testCase => {
     it(testCase.it, () => {
       expect(parse(...testCase.params)).to.deep.equal(testCase.result);

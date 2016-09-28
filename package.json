@@ -1,23 +1,39 @@
 {
   "name": "autosuggest-highlight",
   "version": "2.1.1",
-  "description": "Utilities for highlighting in autosuggest components",
-  "main": "dist/autosuggest-highlight.js",
+  "description": "Utilities for highlighting text in autosuggest and autocomplete components",
   "repository": {
     "type": "git",
     "url": "https://github.com/moroshko/autosuggest-highlight.git"
   },
   "author": "Misha Moroshko <michael.moroshko@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/moroshko/autosuggest-highlight/issues"
-  },
-  "homepage": "https://github.com/moroshko/autosuggest-highlight",
   "scripts": {
-    "lint": "eslint src test webpack.standalone.config.js",
-    "test": "npm run lint && mocha test --opts mocha.opts",
-    "standalone": "webpack --config webpack.standalone.config.js",
-    "build": "npm run lint && npm test && babel src --out-dir dist && npm run standalone"
+    "lint": "eslint src",
+    "test": "nyc mocha \"src/**/*.test.js\"",
+    "dist": "rm -rf dist && mkdir dist && babel src -d dist --ignore *.test.js",
+    "prebuild": "npm run lint && npm test",
+    "build": "npm run dist",
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm run dist"
   },
+  "dependencies": {
+    "lodash.repeat": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-register": "^6.14.0",
+    "bithound": "^1.7.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.6.1",
+    "eslint-plugin-mocha": "^4.5.1",
+    "mocha": "^3.1.0",
+    "nyc": "^8.3.0"
+  },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "autosuggest",
     "autocomplete",
@@ -32,19 +48,25 @@
     "auto suggest highlight",
     "auto complete highlight"
   ],
-  "dependencies": {
-    "lodash.repeat": "^3.0.1"
-  },
-  "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-core": "^5.8.25",
-    "babel-eslint": "^4.1.3",
-    "babel-loader": "^5.3.2",
-    "chai": "^3.2.0",
-    "eslint": "^1.5.0",
-    "mocha": "^2.3.2",
-    "node-libs-browser": "^0.5.3",
-    "webpack": "^1.12.2"
+  "nyc": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "src/**/*.test.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "check-coverage": true
   },
   "license": "MIT"
 }

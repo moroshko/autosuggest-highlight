@@ -1,27 +1,16 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _lodashRepeat = require('lodash.repeat');
-
-var _lodashRepeat2 = _interopRequireDefault(_lodashRepeat);
-
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-exports['default'] = function (text, query) {
+exports.default = function (text, query) {
   var queryWords = query.split(/\s+/).filter(function (queryWord) {
     return queryWord.length > 0;
   });
 
   return queryWords.reduce(function (result, queryWord) {
-    var regex = undefined;
+    var regex = void 0;
 
     if (queryWord === '&') {
       regex = /&/i;
@@ -37,7 +26,7 @@ exports['default'] = function (text, query) {
       result.push([index, index + queryWord.length]);
 
       // Replace what we just found with spaces so we don't find it again
-      text = text.slice(0, index) + (0, _lodashRepeat2['default'])(' ', queryWord.length) + text.slice(index + queryWord.length);
+      text = text.slice(0, index) + (0, _lodash2.default)(' ', queryWord.length) + text.slice(index + queryWord.length);
     }
 
     return result;
@@ -48,4 +37,13 @@ exports['default'] = function (text, query) {
   });
 };
 
-module.exports = exports['default'];
+var _lodash = require('lodash.repeat');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
