@@ -1,9 +1,23 @@
-[![Build Status][status-image]][status-url]
-[![NPM Version][npm-image]][npm-url]
+<a href="https://codeship.com/projects/78168" target="_blank">
+  <img src="https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg?style=flat-square"
+       alt="Build Status" />
+</a>
+<a href="https://codecov.io/gh/moroshko/autosuggest-highlight" target="_blank">
+  <img src="https://img.shields.io/codecov/c/github/moroshko/autosuggest-highlight/master.svg?style=flat-square"
+       alt="Coverage Status">
+</a>
+<a href="https://www.bithound.io/github/moroshko/autosuggest-highlight" target="_blank">
+  <img src="https://www.bithound.io/github/moroshko/autosuggest-highlight/badges/score.svg"
+       alt="bitHound Overall Score">
+</a>
+<a href="https://npmjs.org/package/autosuggest-highlight" target="_blank">
+  <img src="https://img.shields.io/npm/v/autosuggest-highlight.svg?style=flat-square"
+       alt="NPM Version" />
+</a>
 
 # Autosuggest Highlight
 
-This library contains utilities for highlighting in autosuggest components.
+Utilities for highlighting text in autosuggest and autocomplete components.
 
 ## Installation
 
@@ -11,17 +25,10 @@ This library contains utilities for highlighting in autosuggest components.
 npm install autosuggest-highlight --save
 ```
 
-Then, in your app:
-
-```js
-var highlight = require('autosuggest-highlight');
-```
-
 ## API
 
 * [`match(text, query)`](#match)
 * [`parse(text, matches)`](#parse)
-* [`parseHTML(text, tag)`](#parseHTML)
 
 <a name="match"></a>
 ### match(text, query)
@@ -75,33 +82,6 @@ var parts = highlight.parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 // ]
 ```
 
-<a name="parseHTML"></a>
-### parseHTML(text, tag)
-
-This function breaks the given `text` to parts according to the given `tag`.
-
-Best way to explain how it works is using an example:
-
-```js
-var parts = highlight.parseHTML('<strong>Mill Park</strong> 3082 <strong>VIC</strong>', 'strong');
-
-// Returns:
-// [
-//   {
-//     text: 'Mill Park',
-//     highlight: true
-//   },
-//   {
-//     text: ' 3082 ',
-//     highlight: false
-//   },
-//   {
-//     text: 'VIC',
-//     highlight: true
-//   }
-// ]
-```
-
 ## Running Tests
 
 ```shell
@@ -110,9 +90,4 @@ npm test
 
 ## License
 
-[MIT](http://moroshko.mit-license.org)
-
-[status-image]: https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg
-[status-url]: https://codeship.com/projects/78168
-[npm-image]: https://img.shields.io/npm/v/autosuggest-highlight.svg
-[npm-url]: https://npmjs.org/package/autosuggest-highlight
+<a href="http://moroshko.mit-license.org" target="_blank">MIT</a>

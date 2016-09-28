@@ -17,6 +17,7 @@
     "prepublish": "npm run dist"
   },
   "dependencies": {
+    "lodash.deburr": "^4.1.0",
     "lodash.repeat": "^4.1.0"
   },
   "devDependencies": {
