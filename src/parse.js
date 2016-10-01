@@ -1,9 +1,9 @@
-export default (text, matches) => {
-  let result = [];
+module.exports = function parse(text, matches) {
+  var result = [];
 
   if (matches.length === 0) {
     result.push({
-      text,
+      text: text,
       highlight: false
     });
   } else {
@@ -15,7 +15,10 @@ export default (text, matches) => {
     }
   }
 
-  matches.forEach(([startIndex, endIndex], i) => {
+  matches.forEach(function(match, i) {
+    var startIndex = match[0];
+    var endIndex = match[1];
+
     result.push({
       text: text.slice(startIndex, endIndex),
       highlight: true

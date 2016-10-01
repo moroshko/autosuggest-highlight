@@ -42,9 +42,11 @@ It returns an array of pairs. Every pair `[a, b]` means that `text.slice(a, b)` 
 For example:
 
 ```js
+var match = require('autosuggest-highlight/match');
+
 // text indices:       012345678901234567
 // chars to highlight: vvvv      vvv
-const matches = match('Mill Park 3082 VIC', 'mill 308');
+var matches = match('Mill Park 3082 VIC', 'mill 308');
 
 // [[0, 4], [10, 13]]
 ```
@@ -59,7 +61,9 @@ It returns an array of `text` parts by specifying whether the part should be hig
 For example:
 
 ```js
-const parts = parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
+var parse = require('autosuggest-highlight/parse');
+
+var parts = parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 
 // [
 //   {

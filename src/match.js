@@ -1,14 +1,16 @@
-import repeat from 'lodash.repeat';
-import escapeStringRegexp from 'escape-string-regexp';
+var repeat = require('lodash.repeat');
+var escapeStringRegexp = require('escape-string-regexp');
 
-export default (text, query) => {
-  const queryWords = query
+module.exports = function match(text, query) {
+  var queryWords = query
     .split(/\s+/)
-    .filter(queryWord => queryWord.length > 0);
+    .filter(function(queryWord) {
+      return queryWord.length > 0;
+    });
 
   return queryWords
-    .reduce((result, queryWord) => {
-      let regex;
+    .reduce(function(result, queryWord) {
+      var regex;
 
       if (queryWord === '&') {
         regex = /&/i;
@@ -18,7 +20,7 @@ export default (text, query) => {
         regex = new RegExp('\\b' + escapeStringRegexp(queryWord), 'i');
       }
 
-      const index = text.search(regex);
+      var index = text.search(regex);
 
       if (index > -1) {
         result.push([index, index + queryWord.length]);
@@ -31,6 +33,10 @@ export default (text, query) => {
 
       return result;
     }, [])
-    .filter(match => match !== null)
-    .sort((match1, match2) => match1[0] - match2[0]);
+    .filter(function(match) {
+      return match !== null;
+    })
+    .sort(function(match1, match2) {
+      return match1[0] - match2[0];
+    });
 };

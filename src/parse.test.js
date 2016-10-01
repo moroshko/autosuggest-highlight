@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import parse from './parse';
+var expect = require('chai').expect;
+var parse = require('./parse');
 
-describe('parse', () => {
-  it('should not highlight the text if there is no matches', () => {
+describe('parse', function() {
+  it('should not highlight the text if there is no matches', function() {
     expect(parse('Hello world', [])).to.deep.equal([
       {
         text: 'Hello world',
@@ -11,7 +11,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('should highlight a single partial match', () => {
+  it('should highlight a single partial match', function() {
     expect(parse('Hello world', [[0, 4]])).to.deep.equal([
       {
         text: 'Hell',
@@ -24,7 +24,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('should highlight a single complete match', () => {
+  it('should highlight a single complete match', function() {
     expect(parse('Hello world', [[0, 11]])).to.deep.equal([
       {
         text: 'Hello world',
@@ -33,7 +33,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('should highlight multiple non-consecutive matches', () => {
+  it('should highlight multiple non-consecutive matches', function() {
     expect(parse('Hello world', [[2, 4], [6, 8]])).to.deep.equal([
       {
         text: 'He',
@@ -58,7 +58,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('should highlight multiple consecutive matches', () => {
+  it('should highlight multiple consecutive matches', function() {
     expect(parse('Hello world', [[2, 4], [4, 8]])).to.deep.equal([
       {
         text: 'He',
