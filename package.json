@@ -59,5 +59,8 @@
     ],
     "check-coverage": true
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "diacritic": "0.0.2"
+  }
 }

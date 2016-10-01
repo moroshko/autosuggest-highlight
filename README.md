@@ -39,16 +39,68 @@ Calculates the characters to highlight in `text` based on `query`.
 
 It returns an array of pairs. Every pair `[a, b]` means that `text.slice(a, b)` should be highlighted.
 
-For example:
+#### Examples
+
+We match only at the beginning of a word:
 
 ```js
 var match = require('autosuggest-highlight/match');
 
-// text indices:     0123456789012345
-// chars to highlight:      vv   v
-var matches = match('Pretty cool text', 't co'); // Note that 't' matches only
-                                                 // at the beginning of a word
-// [[7, 9], [12, 13]]
+// text indices:     012345678
+// highlighting:          vv
+var matches = match('some text', 'te'); // [[5, 7]]
+```
+
+```js
+// text indices:     012345678
+// highlighting:
+var matches = match('some text', 'e'); // []
+```
+
+When `query` is a single word, only the first match is returned:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v
+var matches = match('some sweet text', 's'); // [[0, 1]]
+```
+
+You'll get the second match, if `query` contains multiple words:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v    v
+var matches = match('some sweet text', 's s'); // [[0, 1], [5, 6]]
+```
+
+Matches are case insensitive:
+
+```js
+// text indices:     012345678
+// highlighting:          v
+var matches = match('Some Text', 't'); // [[5, 6]]
+```
+
+and [diacritics](https://en.wikipedia.org/wiki/Diacritic) are removed:
+
+```js
+// text indices:     0123456
+// highlighting:     vvvv
+var matches = match('Déjà vu', 'deja'); // [[0, 4]]
+```
+
+When `query` has multiple words, the order doesn't matter:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v      v
+var matches = match('Albert Einstein', 'a e'); // [[0, 1], [7, 8]]
+```
+
+```js
+// text indices:     012345678901234
+// highlighting:     v      v
+var matches = match('Albert Einstein', 'e a'); // [[0, 1], [7, 8]]
 ```
 
 <a name="parse"></a>
@@ -56,37 +108,40 @@ var matches = match('Pretty cool text', 't co'); // Note that 't' matches only
 
 Breaks the given `text` to parts based on `matches`.
 
-It returns an array of `text` parts by specifying whether the part should be highlighted or not.
+It returns an array of `text` parts by specifying whether each part should be highlighted or not.
 
 For example:
 
 ```js
 var parse = require('autosuggest-highlight/parse');
 
+// text indices:   0123456789012345
+// highlighting:          vv   v
 var parts = parse('Pretty cool text', [[7, 9], [12, 13]]);
-
-// [
-//   {
-//     text: 'Pretty ',
-//     highlight: false
-//   },
-//   {
-//     text: 'co',
-//     highlight: true
-//   },
-//   {
-//     text: 'ol ',
-//     highlight: false
-//   },
-//   {
-//     text: 't',
-//     highlight: true
-//   },
-//   {
-//     text: 'ext',
-//     highlight: false
-//   }
-// ]
+/*
+  [
+    {
+      text: 'Pretty ',
+      highlight: false
+    },
+    {
+      text: 'co',
+      highlight: true
+    },
+    {
+      text: 'ol ',
+      highlight: false
+    },
+    {
+      text: 't',
+      highlight: true
+    },
+    {
+      text: 'ext',
+      highlight: false
+    }
+  ]
+*/
 ```
 
 ## License
