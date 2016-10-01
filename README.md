@@ -85,12 +85,6 @@ var parts = parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 // ]
 ```
 
-## Running Tests
-
-```shell
-npm test
-```
-
 ## License
 
 <a href="http://moroshko.mit-license.org" target="_blank">MIT</a>
