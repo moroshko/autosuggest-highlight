@@ -27,41 +27,40 @@ npm install autosuggest-highlight --save
 
 ## API
 
-* [`match(text, query)`](#match)
-* [`parse(text, matches)`](#parse)
+| Function | Description |
+| :--- | :--- |
+| [`match(text, query)`](#match) | Calculates the characters to highlight in `text` based on `query`. |
+| [`parse(text, matches)`](#parse) | Breaks the given `text` to parts based on `matches`. |
 
 <a name="match"></a>
 ### match(text, query)
 
-This function calculates the highlighting bits in `text` based on the `query`.
+Calculates the characters to highlight in `text` based on `query`.
 
-It returns an array of pairs. Every `[a, b]` pair means that `text.slice(a, b)` should be highlighted.
+It returns an array of pairs. Every pair `[a, b]` means that `text.slice(a, b)` should be highlighted.
 
 For example:
 
 ```js
-//          012345678901234567       (text indices)
-//          vvvv      vvv            (characters to highlight)
-var text = 'Mill Park 3082 VIC';
-var query = 'mill 308';
+// text indices:       012345678901234567
+// chars to highlight: vvvv      vvv
+const matches = match('Mill Park 3082 VIC', 'mill 308');
 
-var matches = highlight.match(text, query);
-
-// Returns:
 // [[0, 4], [10, 13]]
 ```
 
 <a name="parse"></a>
 ### parse(text, matches)
 
-This function breaks the given `text` to parts according to `matches` (the output of [`match()`](#match)).
+Breaks the given `text` to parts based on `matches`.
 
-Best way to explain how it works is using an example:
+It returns an array of `text` parts by specifying whether the part should be highlighted or not.
+
+For example:
 
 ```js
-var parts = highlight.parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
+const parts = parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
 
-// Returns:
 // [
 //   {
 //     text: 'Mill',
