@@ -1,27 +1,18 @@
 import { expect } from 'chai';
 import parse from './parse';
 
-const testCases = [
-  {
-    it: 'supports no matches',
-    params: [
-      'Hello world',
-      []
-    ],
-    result: [
+describe('parse', () => {
+  it('supports no matches', () => {
+    expect(parse('Hello world', [])).to.deep.equal([
       {
         text: 'Hello world',
         highlight: false
       }
-    ]
-  },
-  {
-    it: 'highlights a single partial match',
-    params: [
-      'Hello world',
-      [[0, 4]]
-    ],
-    result: [
+    ]);
+  });
+
+  it('highlights a single partial match', () => {
+    expect(parse('Hello world', [[0, 4]])).to.deep.equal([
       {
         text: 'Hell',
         highlight: true
@@ -30,28 +21,20 @@ const testCases = [
         text: 'o world',
         highlight: false
       }
-    ]
-  },
-  {
-    it: 'highlights a single complete match',
-    params: [
-      'Hello world',
-      [[0, 11]]
-    ],
-    result: [
+    ]);
+  });
+
+  it('highlights a single complete match', () => {
+    expect(parse('Hello world', [[0, 11]])).to.deep.equal([
       {
         text: 'Hello world',
         highlight: true
       }
-    ]
-  },
-  {
-    it: 'highlights multiple non-consecutive matches',
-    params: [
-      'Hello world',
-      [[2, 4], [6, 8]]
-    ],
-    result: [
+    ]);
+  });
+
+  it('highlights multiple non-consecutive matches', () => {
+    expect(parse('Hello world', [[2, 4], [6, 8]])).to.deep.equal([
       {
         text: 'He',
         highlight: false
@@ -72,15 +55,11 @@ const testCases = [
         text: 'rld',
         highlight: false
       }
-    ]
-  },
-  {
-    it: 'highlights multiple consecutive matches',
-    params: [
-      'Hello world',
-      [[2, 4], [4, 8]]
-    ],
-    result: [
+    ]);
+  });
+
+  it('highlights multiple consecutive matches', () => {
+    expect(parse('Hello world', [[2, 4], [4, 8]])).to.deep.equal([
       {
         text: 'He',
         highlight: false
@@ -97,14 +76,6 @@ const testCases = [
         text: 'rld',
         highlight: false
       }
-    ]
-  }
-];
-
-describe('parse', () => {
-  testCases.forEach(testCase => {
-    it(testCase.it, () => {
-      expect(parse(...testCase.params)).to.deep.equal(testCase.result);
-    });
+    ]);
   });
 });
