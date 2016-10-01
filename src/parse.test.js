@@ -2,15 +2,6 @@ var expect = require('chai').expect;
 var parse = require('./parse');
 
 describe('parse', function() {
-  it('should not highlight the text if there is no matches', function() {
-    expect(parse('Hello world', [])).to.deep.equal([
-      {
-        text: 'Hello world',
-        highlight: false
-      }
-    ]);
-  });
-
   it('should highlight a single partial match', function() {
     expect(parse('Hello world', [[0, 4]])).to.deep.equal([
       {
@@ -74,6 +65,15 @@ describe('parse', function() {
       },
       {
         text: 'rld',
+        highlight: false
+      }
+    ]);
+  });
+
+  it('should not highlight the text if there are no matches', function() {
+    expect(parse('Hello world', [])).to.deep.equal([
+      {
+        text: 'Hello world',
         highlight: false
       }
     ]);
