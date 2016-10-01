@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import parse from './parse';
 
 describe('parse', () => {
-  it('supports no matches', () => {
+  it('should not highlight the text if there is no matches', () => {
     expect(parse('Hello world', [])).to.deep.equal([
       {
         text: 'Hello world',
@@ -11,7 +11,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('highlights a single partial match', () => {
+  it('should highlight a single partial match', () => {
     expect(parse('Hello world', [[0, 4]])).to.deep.equal([
       {
         text: 'Hell',
@@ -24,7 +24,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('highlights a single complete match', () => {
+  it('should highlight a single complete match', () => {
     expect(parse('Hello world', [[0, 11]])).to.deep.equal([
       {
         text: 'Hello world',
@@ -33,7 +33,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('highlights multiple non-consecutive matches', () => {
+  it('should highlight multiple non-consecutive matches', () => {
     expect(parse('Hello world', [[2, 4], [6, 8]])).to.deep.equal([
       {
         text: 'He',
@@ -58,7 +58,7 @@ describe('parse', () => {
     ]);
   });
 
-  it('highlights multiple consecutive matches', () => {
+  it('should highlight multiple consecutive matches', () => {
     expect(parse('Hello world', [[2, 4], [4, 8]])).to.deep.equal([
       {
         text: 'He',
