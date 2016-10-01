@@ -44,11 +44,11 @@ For example:
 ```js
 var match = require('autosuggest-highlight/match');
 
-// text indices:       012345678901234567
-// chars to highlight: vvvv      vvv
-var matches = match('Mill Park 3082 VIC', 'mill 308');
-
-// [[0, 4], [10, 13]]
+// text indices:     0123456789012345
+// chars to highlight:      vv   v
+var matches = match('Pretty cool text', 't co'); // Note that 't' matches only
+                                                 // at the beginning of a word
+// [[7, 9], [12, 13]]
 ```
 
 <a name="parse"></a>
@@ -63,23 +63,27 @@ For example:
 ```js
 var parse = require('autosuggest-highlight/parse');
 
-var parts = parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
+var parts = parse('Pretty cool text', [[7, 9], [12, 13]]);
 
 // [
 //   {
-//     text: 'Mill',
-//     highlight: true
-//   },
-//   {
-//     text: ' Park ',
+//     text: 'Pretty ',
 //     highlight: false
 //   },
 //   {
-//     text: '308',
+//     text: 'co',
 //     highlight: true
 //   },
 //   {
-//     text: '2 VIC',
+//     text: 'ol ',
+//     highlight: false
+//   },
+//   {
+//     text: 't',
+//     highlight: true
+//   },
+//   {
+//     text: 'ext',
 //     highlight: false
 //   }
 // ]

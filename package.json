@@ -16,11 +16,6 @@
     "postversion": "git push && git push --tags",
     "prepublish": "npm run dist"
   },
-  "dependencies": {
-    "escape-string-regexp": "^1.0.5",
-    "lodash.deburr": "^4.1.0",
-    "lodash.repeat": "^4.1.0"
-  },
   "devDependencies": {
     "bithound": "^1.7.0",
     "chai": "^3.5.0",
@@ -53,10 +48,10 @@
     "functions": 100,
     "branches": 100,
     "include": [
-      "src/**/*.js"
+      "src/*.js"
     ],
     "exclude": [
-      "src/**/*.test.js"
+      "src/*.test.js"
     ],
     "reporter": [
       "lcov",

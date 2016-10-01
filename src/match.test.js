@@ -2,58 +2,53 @@ var expect = require('chai').expect;
 var match = require('./match');
 
 describe('match', function() {
-  it('should not highlight in the middle of a word', function() {
-    expect(match('Cheltenham VIC 3192 AU', 'am'))
-      .to.deep.equal([]);
+  it('should highlight the beginning of text', function() {
+    expect(match('Very nice day', 'ver'))
+      .to.deep.equal([[0, 3]]);
   });
 
-  it('should highlight the first match', function() {
-    expect(match('Cheltenham VIC 3192 AU', 'vic'))
-      .to.deep.equal([[11, 14]]);
+  it('should highlight the end of text', function() {
+    expect(match('Very nice day', 'day'))
+      .to.deep.equal([[10, 13]]);
   });
 
-  it('should highlight multiple words', function() {
-    expect(match('Cheltenham VIC 3192 AU', 'ch 3 a'))
-      .to.deep.equal([[0, 2], [15, 16], [20, 21]]);
+  it('should highlight only the first instance when query has one word', function() {
+    expect(match('Very very nice day', 'very'))
+      .to.deep.equal([[0, 4]]);
   });
 
-  it('should highlight multiple words regardless of order', function() {
-    expect(match('Cheltenham VIC 3192 AU', 'a v c 3'))
-      .to.deep.equal([[0, 1], [11, 12], [15, 16], [20, 21]]);
+  it('should highlight all matching instances when query has multiple words', function() {
+    expect(match('Very very nice day', 'very VERY'))
+      .to.deep.equal([[0, 4], [5, 9]]);
+  });
+
+  it('should highlight special characters', function() {
+    expect(match('this & doesn\'t, (makesense) or is-it?', '(makesense) doesn\'t, is-it? &'))
+      .to.deep.equal([[5, 6], [7, 15], [16, 27], [31, 37]]);
+  });
+
+  it('should sort the matches', function() {
+    expect(match('Very nice day', 'd ver ni'))
+      .to.deep.equal([[0, 3], [5, 7], [10, 11]]);
   });
 
   it('should ignore whitespaces in query', function() {
-    expect(match('Cheltenham VIC 3192 AU', '   a \t\tv  \t   c      3\t\t'))
-      .to.deep.equal([[0, 1], [11, 12], [15, 16], [20, 21]]);
+    expect(match('Very nice day', '\td   \n\n ver \t\t   ni \n'))
+      .to.deep.equal([[0, 3], [5, 7], [10, 11]]);
   });
 
-  it('should highlight two consecutive words', function() {
-    expect(match('Cheltenham VIC 3192 AU', 'cheltenham vic'))
-      .to.deep.equal([[0, 10], [11, 14]]);
+  it('should not highlight in the middle of a word by default', function() {
+    expect(match('Very nice day', 'ice'))
+      .to.deep.equal([]);
   });
 
-  it('should highlight &', function() {
-    expect(match('Port Macquarie & Mid North Coast NSW', 'port macquarie & mid'))
-      .to.deep.equal([[0, 4], [5, 14], [15, 16], [17, 20]]);
+  it('should not highlight anything if the query is blank', function() {
+    expect(match('Very nice day', ' '))
+      .to.deep.equal([]);
   });
 
-  it('should highlight -', function() {
-    expect(match('Ngaanyatjarra-Giles WA 0872', 'ngaanyatjarra-giles wa'))
-      .to.deep.equal([[0, 19], [20, 22]]);
-  });
-
-  it('should highlight ,', function() {
-    expect(match('Wollongong, Illawarra & South Coast NSW', 'wollongong, il'))
-      .to.deep.equal([[0, 11], [12, 14]]);
-  });
-
-  it('should highlight ( and )', function() {
-    expect(match('West Island Cocos (Keeling) Islands WA 6799', 'cocos (keeling)'))
-      .to.deep.equal([[12, 17], [18, 27]]);
-  });
-
-  it('should not highlight the same char twice', function() {
-    expect(match('North Ryde NSW 2113', 'north n'))
-      .to.deep.equal([[0, 5], [11, 12]]);
+  it('should not merge the matches', function() {
+    expect(match('Very nice day', 'very nice day'))
+      .to.deep.equal([[0, 4], [5, 9], [10, 13]]);
   });
 });
