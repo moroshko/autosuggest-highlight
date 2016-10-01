@@ -17,6 +17,7 @@
     "prepublish": "npm run dist"
   },
   "dependencies": {
+    "escape-string-regexp": "^1.0.5",
     "lodash.deburr": "^4.1.0",
     "lodash.repeat": "^4.1.0"
   },

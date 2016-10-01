@@ -1,7 +1,5 @@
 import repeat from 'lodash.repeat';
-
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_special_characters
-const escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+import escapeStringRegexp from 'escape-string-regexp';
 
 export default (text, query) => {
   const queryWords = query
@@ -15,9 +13,9 @@ export default (text, query) => {
       if (queryWord === '&') {
         regex = /&/i;
       } else if (queryWord[0] === '(') {
-        regex = new RegExp(escapeRegexCharacters(queryWord), 'i');
+        regex = new RegExp(escapeStringRegexp(queryWord), 'i');
       } else {
-        regex = new RegExp('\\b' + escapeRegexCharacters(queryWord), 'i');
+        regex = new RegExp('\\b' + escapeStringRegexp(queryWord), 'i');
       }
 
       const index = text.search(regex);
