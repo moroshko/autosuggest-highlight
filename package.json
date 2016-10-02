@@ -1,6 +1,6 @@
 {
   "name": "autosuggest-highlight",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Utilities for highlighting text in autosuggest and autocomplete components",
   "repository": {
     "type": "git",
