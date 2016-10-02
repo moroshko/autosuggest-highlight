@@ -1,38 +1,46 @@
-import repeat from 'lodash.repeat';
+var removeDiacritics = require('diacritic').clean;
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_special_characters
+var specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
+
+// http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.2.6
+var wordCharacterRegex = /[a-z0-9_]/i;
+
+var whitespacesRegex = /\s+/;
+
 function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return str.replace(specialCharsRegex, '\\$&');
 }
 
-export default function(text, query) {
-  const queryWords = query.split(/\s+/)
-                          .filter(queryWord => queryWord.length > 0);
+module.exports = function match(text, query) {
+  text = removeDiacritics(text);
 
-  return queryWords.reduce(function(result, queryWord) {
-    let regex;
+  return query
+    .trim()
+    .split(whitespacesRegex)
+    // If query is blank, we'll get empty string here, so let's filter it out.
+    .filter(function(word) {
+      return word.length > 0;
+    })
+    .reduce(function(result, word) {
+      var wordLen = word.length;
+      var prefix = wordCharacterRegex.test(word[0]) ? '\\b' : '';
+      var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
+      var index = text.search(regex);
 
-    if (queryWord === '&') {
-      regex = /&/i;
-    } else if (queryWord[0] === '(') {
-      regex = new RegExp(escapeRegexCharacters(queryWord), 'i');
-    } else {
-      regex = new RegExp('\\b' + escapeRegexCharacters(queryWord), 'i');
-    }
+      if (index > -1) {
+        result.push([index, index + wordLen]);
 
-    const index = text.search(regex);
+        // Replace what we just found with spaces so we don't find it again.
+        text =
+          text.slice(0, index) +
+          (new Array(wordLen + 1)).join(' ') +
+          text.slice(index + wordLen);
+      }
 
-    if (index > -1) {
-      result.push([index, index + queryWord.length]);
-
-      // Replace what we just found with spaces so we don't find it again
-      text = text.slice(0, index) +
-             repeat(' ', queryWord.length) +
-             text.slice(index + queryWord.length);
-    }
-
-    return result;
-  }, [])
-  .filter(match => match !== null)
-  .sort((match1, match2) => match1[0] - match2[0]);
-}
+      return result;
+    }, [])
+    .sort(function(match1, match2) {
+      return match1[0] - match2[0];
+    });
+};

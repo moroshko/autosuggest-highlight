@@ -1,9 +1,23 @@
-[![Build Status][status-image]][status-url]
-[![NPM Version][npm-image]][npm-url]
+<a href="https://codeship.com/projects/78168" target="_blank">
+  <img src="https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg?style=flat-square"
+       alt="Build Status" />
+</a>
+<a href="https://codecov.io/gh/moroshko/autosuggest-highlight" target="_blank">
+  <img src="https://img.shields.io/codecov/c/github/moroshko/autosuggest-highlight/master.svg?style=flat-square"
+       alt="Coverage Status">
+</a>
+<a href="https://www.bithound.io/github/moroshko/autosuggest-highlight" target="_blank">
+  <img src="https://www.bithound.io/github/moroshko/autosuggest-highlight/badges/score.svg"
+       alt="bitHound Overall Score">
+</a>
+<a href="https://npmjs.org/package/autosuggest-highlight" target="_blank">
+  <img src="https://img.shields.io/npm/v/autosuggest-highlight.svg?style=flat-square"
+       alt="NPM Version" />
+</a>
 
 # Autosuggest Highlight
 
-This library contains utilities for highlighting in autosuggest components.
+Utilities for highlighting text in autosuggest and autocomplete components.
 
 ## Installation
 
@@ -11,108 +25,125 @@ This library contains utilities for highlighting in autosuggest components.
 npm install autosuggest-highlight --save
 ```
 
-Then, in your app:
-
-```js
-var highlight = require('autosuggest-highlight');
-```
-
 ## API
 
-* [`match(text, query)`](#match)
-* [`parse(text, matches)`](#parse)
-* [`parseHTML(text, tag)`](#parseHTML)
+| Function | Description |
+| :--- | :--- |
+| [`match(text, query)`](#match) | Calculates the characters to highlight in `text` based on `query`. |
+| [`parse(text, matches)`](#parse) | Breaks the given `text` to parts based on `matches`. |
 
 <a name="match"></a>
 ### match(text, query)
 
-This function calculates the highlighting bits in `text` based on the `query`.
+Calculates the characters to highlight in `text` based on `query`.
 
-It returns an array of pairs. Every `[a, b]` pair means that `text.slice(a, b)` should be highlighted.
+It returns an array of pairs. Every pair `[a, b]` means that `text.slice(a, b)` should be highlighted.
 
-For example:
+#### Examples
+
+We match only at the beginning of a word:
 
 ```js
-//          012345678901234567       (text indices)
-//          vvvv      vvv            (characters to highlight)
-var text = 'Mill Park 3082 VIC';
-var query = 'mill 308';
+var match = require('autosuggest-highlight/match');
 
-var matches = highlight.match(text, query);
+// text indices:     012345678
+// highlighting:          vv
+var matches = match('some text', 'te'); // [[5, 7]]
+```
 
-// Returns:
-// [[0, 4], [10, 13]]
+```js
+// text indices:     012345678
+// highlighting:
+var matches = match('some text', 'e'); // []
+```
+
+When `query` is a single word, only the first match is returned:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v
+var matches = match('some sweet text', 's'); // [[0, 1]]
+```
+
+You'll get the second match, if `query` contains multiple words:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v    v
+var matches = match('some sweet text', 's s'); // [[0, 1], [5, 6]]
+```
+
+Matches are case insensitive:
+
+```js
+// text indices:     012345678
+// highlighting:          v
+var matches = match('Some Text', 't'); // [[5, 6]]
+```
+
+and [diacritics](https://en.wikipedia.org/wiki/Diacritic) are removed:
+
+```js
+// text indices:     0123456
+// highlighting:     vvvv
+var matches = match('Déjà vu', 'deja'); // [[0, 4]]
+```
+
+When `query` has multiple words, the order doesn't matter:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v      v
+var matches = match('Albert Einstein', 'a e'); // [[0, 1], [7, 8]]
+```
+
+```js
+// text indices:     012345678901234
+// highlighting:     v      v
+var matches = match('Albert Einstein', 'e a'); // [[0, 1], [7, 8]]
 ```
 
 <a name="parse"></a>
 ### parse(text, matches)
 
-This function breaks the given `text` to parts according to `matches` (the output of [`match()`](#match)).
+Breaks the given `text` to parts based on `matches`.
 
-Best way to explain how it works is using an example:
+It returns an array of `text` parts by specifying whether each part should be highlighted or not.
 
-```js
-var parts = highlight.parse('Mill Park 3082 VIC', [[0, 4], [10, 13]]);
-
-// Returns:
-// [
-//   {
-//     text: 'Mill',
-//     highlight: true
-//   },
-//   {
-//     text: ' Park ',
-//     highlight: false
-//   },
-//   {
-//     text: '308',
-//     highlight: true
-//   },
-//   {
-//     text: '2 VIC',
-//     highlight: false
-//   }
-// ]
-```
-
-<a name="parseHTML"></a>
-### parseHTML(text, tag)
-
-This function breaks the given `text` to parts according to the given `tag`.
-
-Best way to explain how it works is using an example:
+For example:
 
 ```js
-var parts = highlight.parseHTML('<strong>Mill Park</strong> 3082 <strong>VIC</strong>', 'strong');
+var parse = require('autosuggest-highlight/parse');
 
-// Returns:
-// [
-//   {
-//     text: 'Mill Park',
-//     highlight: true
-//   },
-//   {
-//     text: ' 3082 ',
-//     highlight: false
-//   },
-//   {
-//     text: 'VIC',
-//     highlight: true
-//   }
-// ]
-```
-
-## Running Tests
-
-```shell
-npm test
+// text indices:   0123456789012345
+// highlighting:          vv   v
+var parts = parse('Pretty cool text', [[7, 9], [12, 13]]);
+/*
+  [
+    {
+      text: 'Pretty ',
+      highlight: false
+    },
+    {
+      text: 'co',
+      highlight: true
+    },
+    {
+      text: 'ol ',
+      highlight: false
+    },
+    {
+      text: 't',
+      highlight: true
+    },
+    {
+      text: 'ext',
+      highlight: false
+    }
+  ]
+*/
 ```
 
 ## License
 
-[MIT](http://moroshko.mit-license.org)
-
-[status-image]: https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg
-[status-url]: https://codeship.com/projects/78168
-[npm-image]: https://img.shields.io/npm/v/autosuggest-highlight.svg
-[npm-url]: https://npmjs.org/package/autosuggest-highlight
+<a href="http://moroshko.mit-license.org" target="_blank">MIT</a>
