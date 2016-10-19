@@ -1,25 +1,19 @@
-<a href="https://codeship.com/projects/78168" target="_blank">
-  <img src="https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg?style=flat-square"
-       alt="Build Status" />
-</a>
-<a href="https://codecov.io/gh/moroshko/autosuggest-highlight" target="_blank">
-  <img src="https://img.shields.io/codecov/c/github/moroshko/autosuggest-highlight/master.svg?style=flat-square"
-       alt="Coverage Status">
-</a>
-<a href="https://www.bithound.io/github/moroshko/autosuggest-highlight" target="_blank">
-  <img src="https://www.bithound.io/github/moroshko/autosuggest-highlight/badges/score.svg"
-       alt="bitHound Overall Score">
-</a>
-<a href="https://npmjs.org/package/autosuggest-highlight" target="_blank">
-  <img src="https://img.shields.io/npm/v/autosuggest-highlight.svg?style=flat-square"
-       alt="NPM Version" />
-</a>
+[![Build Status](https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg?style=flat-square)](https://codeship.com/projects/78168)
+[![Coverage Status](https://img.shields.io/codecov/c/github/moroshko/autosuggest-highlight/master.svg?style=flat-square)](https://codecov.io/gh/moroshko/autosuggest-highlight)
+[![bitHound Overall Score](https://www.bithound.io/github/moroshko/autosuggest-highlight/badges/score.svg)](https://www.bithound.io/github/moroshko/autosuggest-highlight)
+[![npm Version](https://img.shields.io/npm/v/autosuggest-highlight.svg?style=flat-square)](https://npmjs.org/package/autosuggest-highlight)
 
 # Autosuggest Highlight
 
 Utilities for highlighting text in autosuggest and autocomplete components.
 
 ## Installation
+
+```shell
+yarn add autosuggest-highlight
+```
+
+or
 
 ```shell
 npm install autosuggest-highlight --save
@@ -146,4 +140,4 @@ var parts = parse('Pretty cool text', [[7, 9], [12, 13]]);
 
 ## License
 
-<a href="http://moroshko.mit-license.org" target="_blank">MIT</a>
+[MIT](http://moroshko.mit-license.org)

@@ -3,4 +3,6 @@ coverage
 .nyc_output
 match
 parse
+umd
 npm-debug.log
+yarn.lock

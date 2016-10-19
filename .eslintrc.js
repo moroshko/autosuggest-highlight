@@ -4,9 +4,6 @@ module.exports = {
     browser: true,
     mocha: true
   },
-  plugins: [
-    'mocha'
-  ],
   extends: [
     'eslint:recommended'
   ],
@@ -18,7 +15,7 @@ module.exports = {
     'comma-style': [2, 'last'],
     'eol-last': 2,
     'func-call-spacing': 2,
-    'indent': ['error', 2, { SwitchCase: 1, MemberExpression: 1 }],
+    'indent': [2, 2, { SwitchCase: 1, MemberExpression: 1 }],
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'keyword-spacing': 2,
     'linebreak-style': [2, 'unix'],
@@ -26,6 +23,28 @@ module.exports = {
     'no-console': 2,
     'no-global-assign': 2,
     'no-multiple-empty-lines': [2, { max: 1 }],
+    'no-restricted-properties': [2,
+      {
+        object: 'describe',
+        property: 'only',
+        message: 'Please run all tests!'
+      },
+      {
+        object: 'describe',
+        property: 'skip',
+        message: 'Please run all tests!'
+      },
+      {
+        object: 'it',
+        property: 'only',
+        message: 'Please run all tests!'
+      },
+      {
+        object: 'it',
+        property: 'skip',
+        message: 'Please run all tests!'
+      }
+    ],
     'no-template-curly-in-string': 2,
     'no-trailing-spaces': 2,
     'no-unused-vars': 2,
@@ -39,9 +58,6 @@ module.exports = {
     'space-before-blocks': [2, 'always'],
     'space-before-function-paren': [2, 'never'],
     'space-in-parens': [2, 'never'],
-    'template-curly-spacing': [2, 'never'],
-
-    'mocha/no-exclusive-tests': 'error',
-    'mocha/no-skipped-tests': 'error'
+    'template-curly-spacing': [2, 'never']
   }
 };

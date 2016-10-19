@@ -10,11 +10,12 @@
   "scripts": {
     "lint": "eslint src",
     "test": "nyc mocha \"src/*.test.js\"",
-    "dist": "rm -rf match parse && mkdir match parse && cp src/match.js match/index.js && cp src/parse.js parse/index.js",
+    "dist": "rimraf match parse && mkdir match parse && cp src/match.js match/index.js && cp src/parse.js parse/index.js",
+    "umd": "rimraf umd && webpack",
     "prebuild": "npm run lint && npm test",
-    "build": "npm run dist",
+    "build": "npm run dist && npm run umd",
     "postversion": "git push && git push --tags",
-    "prepublish": "npm run dist"
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "diacritic": "0.0.2"
@@ -22,14 +23,16 @@
   "devDependencies": {
     "bithound": "^1.7.0",
     "chai": "^3.5.0",
-    "eslint": "^3.7.0",
-    "eslint-plugin-mocha": "^4.5.1",
-    "mocha": "^3.1.0",
-    "nyc": "^8.3.0"
+    "eslint": "^3.8.1",
+    "mocha": "^3.1.2",
+    "nyc": "^8.3.1",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.13.2"
   },
   "files": [
     "match",
-    "parse"
+    "parse",
+    "umd"
   ],
   "keywords": [
     "autosuggest",
