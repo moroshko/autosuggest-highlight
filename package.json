@@ -8,7 +8,7 @@
   },
   "author": "Misha Moroshko <michael.moroshko@gmail.com>",
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint src webpack.config.js",
     "test": "nyc mocha \"src/*.test.js\"",
     "dist": "rimraf match parse && mkdir match parse && cp src/match.js match/index.js && cp src/parse.js parse/index.js",
     "umd": "rimraf umd && webpack",
