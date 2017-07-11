@@ -1,6 +1,8 @@
 [![Build Status](https://img.shields.io/codeship/99ce0dd0-d5d5-0132-ce75-1e0a7d4d648e/master.svg?style=flat-square)](https://codeship.com/projects/78168)
+[![Contributors](https://img.shields.io/github/contributors/moroshko/autosuggest-highlight.svg?style=flat-square)](https://github.com/moroshko/autosuggest-highlight/graphs/contributors)
 [![Coverage Status](https://img.shields.io/codecov/c/github/moroshko/autosuggest-highlight/master.svg?style=flat-square)](https://codecov.io/gh/moroshko/autosuggest-highlight)
-[![bitHound Overall Score](https://www.bithound.io/github/moroshko/autosuggest-highlight/badges/score.svg)](https://www.bithound.io/github/moroshko/autosuggest-highlight)
+
+[![npm Downloads](https://img.shields.io/npm/dm/autosuggest-highlight.svg?style=flat-square)](https://npmjs.org/package/autosuggest-highlight)
 [![npm Version](https://img.shields.io/npm/v/autosuggest-highlight.svg?style=flat-square)](https://npmjs.org/package/autosuggest-highlight)
 
 # Autosuggest Highlight
