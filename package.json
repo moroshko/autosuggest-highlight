@@ -21,7 +21,6 @@
     "diacritic": "0.0.2"
   },
   "devDependencies": {
-    "bithound": "^1.7.0",
     "chai": "^4.0.2",
     "eslint": "^4.2.0",
     "mocha": "^3.4.2",
