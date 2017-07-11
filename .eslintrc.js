@@ -4,18 +4,15 @@ module.exports = {
     browser: true,
     mocha: true
   },
-  extends: [
-    'eslint:recommended'
-  ],
+  extends: ['eslint:recommended'],
   rules: {
     'array-callback-return': 2,
     'brace-style': [2, '1tbs'],
-    'camelcase': [2, { properties: 'always' }],
+    camelcase: [2, { properties: 'always' }],
     'comma-dangle': [2, 'never'],
     'comma-style': [2, 'last'],
     'eol-last': 2,
     'func-call-spacing': 2,
-    'indent': [2, 2, { SwitchCase: 1, MemberExpression: 1 }],
     'key-spacing': [2, { beforeColon: false, afterColon: true }],
     'keyword-spacing': 2,
     'linebreak-style': [2, 'unix'],
@@ -23,7 +20,8 @@ module.exports = {
     'no-console': 2,
     'no-global-assign': 2,
     'no-multiple-empty-lines': [2, { max: 1 }],
-    'no-restricted-properties': [2,
+    'no-restricted-properties': [
+      2,
       {
         object: 'describe',
         property: 'only',
@@ -53,8 +51,7 @@ module.exports = {
     'object-curly-spacing': [2, 'always'],
     'prefer-rest-params': 2,
     'quote-props': [2, 'as-needed'],
-    'quotes': [2, 'single'],
-    'semi': [2, 'always'],
+    semi: [2, 'always'],
     'space-before-blocks': [2, 'always'],
     'space-before-function-paren': [2, 'never'],
     'space-in-parens': [2, 'never'],
