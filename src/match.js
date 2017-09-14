@@ -12,7 +12,7 @@ function escapeRegexCharacters(str) {
   return str.replace(specialCharsRegex, '\\$&');
 }
 
-module.exports = function match(text, query, anyMatch = false) {
+module.exports = function match(text, query, anyMatch) {
   text = removeDiacritics(text);
 
   return (
@@ -28,7 +28,9 @@ module.exports = function match(text, query, anyMatch = false) {
         var prefix = wordCharacterRegex.test(word[0]) ? '\\b' : '';
         var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
         //Option for highlighting anywhere in the text #5
-        var index = anyMatch ? text.toLowerCase().search(word.toLowerCase()) : text.search(regex);
+        var index = anyMatch
+          ? text.toLowerCase().search(word.toLowerCase())
+          : text.search(regex);
 
         if (index > -1) {
           result.push([index, index + wordLen]);
