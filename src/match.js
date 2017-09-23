@@ -14,6 +14,7 @@ function escapeRegexCharacters(str) {
 
 module.exports = function match(text, query) {
   text = removeDiacritics(text);
+  query = removeDiacritics(query);
 
   return (
     query
