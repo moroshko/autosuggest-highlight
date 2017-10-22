@@ -23,15 +23,15 @@
     "diacritic": "0.0.2"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
-    "eslint": "^4.2.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
     "husky": "^0.14.3",
-    "lint-staged": "^4.0.1",
-    "mocha": "^3.4.2",
-    "nyc": "^11.0.3",
-    "prettier": "^1.5.2",
-    "rimraf": "^2.6.1",
-    "webpack": "^3.1.0"
+    "lint-staged": "^4.3.0",
+    "mocha": "^4.0.1",
+    "nyc": "^11.2.1",
+    "prettier": "1.7.4",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.8.1"
   },
   "files": [
     "match",
