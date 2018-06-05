@@ -12,7 +12,21 @@ function escapeRegexCharacters(str) {
   return str.replace(specialCharsRegex, '\\$&');
 }
 
-module.exports = function match(text, query) {
+function extend(subject, baseObject) {
+  subject = subject || {};
+  Object.keys(subject).forEach(function(key) {
+    baseObject[key] = !!subject[key];
+  });
+  return baseObject;
+}
+
+module.exports = function match(text, query, options) {
+  options = extend(options, {
+    insideWords: false,
+    findAllOccurrences: false,
+    requireMatchAll: false
+  });
+
   text = removeDiacritics(text);
   query = removeDiacritics(query);
 
@@ -26,11 +40,18 @@ module.exports = function match(text, query) {
       })
       .reduce(function(result, word) {
         var wordLen = word.length;
-        var prefix = wordCharacterRegex.test(word[0]) ? '\\b' : '';
+        var prefix = !options.insideWords && wordCharacterRegex.test(word[0]) ? '\\b' : '';
         var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
-        var index = text.search(regex);
+        var occurrence, index;
 
-        if (index > -1) {
+        occurrence = regex.exec(text);
+        if (options.requireMatchAll && occurrence === null) {
+          text = '';
+          return [];
+        }
+
+        while (occurrence) {
+          index = occurrence.index;
           result.push([index, index + wordLen]);
 
           // Replace what we just found with spaces so we don't find it again.
@@ -38,6 +59,12 @@ module.exports = function match(text, query) {
             text.slice(0, index) +
             new Array(wordLen + 1).join(' ') +
             text.slice(index + wordLen);
+
+          if (!options.findAllOccurrences) {
+            break;
+          }
+
+          occurrence = regex.exec(text);
         }
 
         return result;
