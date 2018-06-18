@@ -1,0 +1,12 @@
+{
+  "./umd/match/index.js": {
+    "bundled": 12252,
+    "minified": 4011,
+    "gzipped": 2861
+  },
+  "./umd/parse/index.js": {
+    "bundled": 1264,
+    "minified": 562,
+    "gzipped": 291
+  }
+}
