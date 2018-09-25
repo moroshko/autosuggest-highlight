@@ -29,7 +29,7 @@ module.exports = function match(text, query, anyMatch) {
         var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
         //Option for highlighting anywhere in the text #5
         var index = anyMatch
-          ? text.toLowerCase().search(word.toLowerCase())
+          ? text.toLowerCase().search(escapeRegexCharacters(word).toLowerCase())
           : text.search(regex);
 
         if (index > -1) {
