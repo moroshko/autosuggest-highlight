@@ -31,19 +31,28 @@ npm install autosuggest-highlight --save
 
 | Function | Description |
 | :--- | :--- |
-| [`match(text, query)`](#match) | Calculates the characters to highlight in `text` based on `query`. |
+| [`match(text, query, options)`](#match) | Calculates the characters to highlight in `text` based on `query`. |
 | [`parse(text, matches)`](#parse) | Breaks the given `text` to parts based on `matches`. |
 
 <a name="match"></a>
-### match(text, query)
+
+### match(text, query, options)
 
 Calculates the characters to highlight in `text` based on `query`.
 
 It returns an array of pairs. Every pair `[a, b]` means that `text.slice(a, b)` should be highlighted.
 
+Options are passed as JSON.
+
+| Option | Description |
+| :--- | :--- |
+| insideWords | `boolean` false by default. Searches inside words |
+| findAllOccurrences | `boolean` false by default. Finds all occurrences of each match |
+| requireMatchAll | `boolean` false by default. Requires each word of `query` to be found in `text` or else returns an empty set |
+
 #### Examples
 
-We match only at the beginning of a word:
+We match at the beginning of a word by default:
 
 ```js
 var match = require('autosuggest-highlight/match');
@@ -59,7 +68,17 @@ var matches = match('some text', 'te'); // [[5, 7]]
 var matches = match('some text', 'e'); // []
 ```
 
-When `query` is a single word, only the first match is returned:
+Enable search inside words:
+
+```js
+var match = require('autosuggest-highlight/match');
+
+// text indices:     012345678
+// highlighting:       v
+var matches = match('some text', 'm', { insideWords: true }); // [[2, 3]]
+```
+
+When `query` is a single word, only the first match is returned by default:
 
 ```js
 // text indices:     012345678901234
@@ -73,6 +92,14 @@ You'll get the second match, if `query` contains multiple words:
 // text indices:     012345678901234
 // highlighting:     v    v
 var matches = match('some sweet text', 's s'); // [[0, 1], [5, 6]]
+```
+
+Or using the findAllOccurrences option:
+
+```js
+// text indices:     012345678901234
+// highlighting:     v    v
+var matches = match('some sweet text', 's', { findAllOccurrences: true }); // [[0, 1], [5, 6]]
 ```
 
 Matches are case insensitive:
@@ -106,6 +133,7 @@ var matches = match('Albert Einstein', 'e a'); // [[0, 1], [7, 8]]
 ```
 
 <a name="parse"></a>
+
 ### parse(text, matches)
 
 Breaks the given `text` to parts based on `matches`.
