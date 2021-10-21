@@ -26,7 +26,7 @@ module.exports = function match(text, query, options) {
     findAllOccurrences: false,
     requireMatchAll: false
   });
- 
+
   text = removeDiacritics(text);
   query = removeDiacritics(query);
 
@@ -40,9 +40,10 @@ module.exports = function match(text, query, options) {
       })
       .reduce(function(result, word) {
         var wordLen = word.length;
-        var prefix = !options.insideWords && wordCharacterRegex.test(word[0]) ? '\\b' : '';
+        var prefix =
+          !options.insideWords && wordCharacterRegex.test(word[0]) ? '\\b' : '';
         var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
-        var occurrence, index; 
+        var occurrence, index;
 
         occurrence = regex.exec(text);
         if (options.requireMatchAll && occurrence === null) {
