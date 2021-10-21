@@ -6,7 +6,7 @@ describe('match', function() {
     expect(match('some text', 'te')).to.deep.equal([[5, 7]]);
   });
 
-  it('should not highlight at the middle of a word', function() {
+  it('should not highlight at the middle of a word if third parameter is not passed or is set to false value', function() {
     expect(match('some text', 'e')).to.deep.equal([]);
   });
 
