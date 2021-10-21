@@ -9,12 +9,6 @@
 
 Utilities for highlighting text in autosuggest and autocomplete components.
 
-## Project status
-
-Looking for maintainers!
-
-Unfortunately, I don't have the time to maintain this project anymore. If you are interested to help, please reach out to me on Twitter [@moroshko](https://twitter.com/moroshko).
-
 ## Installation
 
 ```shell
