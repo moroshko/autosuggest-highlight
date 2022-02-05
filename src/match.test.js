@@ -97,4 +97,42 @@ describe('match', function() {
       match('some sweet text', 's sweet', { requireMatchAll: true })
     ).to.deep.equal([[0, 1], [5, 10]]);
   });
+
+  it('should adjust indexes per original text typed with diactrics', function() {
+    expect(match('œuvre pompes test', 'pompes')).to.deep.equal([[6, 12]]);
+  });
+
+  it('should adjust indexes per original text typed with diactrics', function() {
+    expect(match('œuvre pompes test', 'œuvre')).to.deep.equal([[0, 5]]);
+  });
+
+  it('should adjust indexes per original text typed without diacritics', function() {
+    expect(match('œuvre pompes test', 'oeuvre')).to.deep.equal([[0, 5]]);
+  });
+
+  it('should match if diacritic is typed', function() {
+    expect(match('œuvre', 'œ')).to.deep.equal([[0, 1]]);
+  });
+
+  it('should match if diacritic is not typed', function() {
+    expect(match('œuvre', 'oe')).to.deep.equal([[0, 1]]);
+  });
+
+  it('should not match if part of diacritic is typed', function() {
+    expect(match('œuvre', 'o')).to.deep.equal([]);
+  });
+
+  it('should match single unicode character inside word', function() {
+    expect(match('ma sœur', 'oe', { insideWords: true })).to.deep.equal([
+      [4, 5]
+    ]);
+  });
+
+  it('should match beginning of second word including unicode character', function() {
+    expect(match('ma sœur', 'soe')).to.deep.equal([[3, 5]]);
+  });
+
+  it('should not match entire unicode character in middle of word if part of diacritic is typed', function() {
+    expect(match('ma sœur', 'so')).to.deep.equal([[3, 4]]);
+  });
 });
