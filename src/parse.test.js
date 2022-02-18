@@ -78,4 +78,34 @@ describe('parse', function() {
       }
     ]);
   });
+
+  it('should highlight second word when first word contains œ', function() {
+    expect(parse('œuvre pompes test', [[6, 12]])).to.deep.equal([
+      {
+        text: 'œuvre ',
+        highlight: false
+      },
+      {
+        text: 'pompes',
+        highlight: true
+      },
+      {
+        text: ' test',
+        highlight: false
+      }
+    ]);
+  });
+
+  it('should highlight only first word that contains œ', function() {
+    expect(parse('œuvre pompes test', [[0, 5]])).to.deep.equal([
+      {
+        text: 'œuvre',
+        highlight: true
+      },
+      {
+        text: ' pompes test',
+        highlight: false
+      }
+    ]);
+  });
 });

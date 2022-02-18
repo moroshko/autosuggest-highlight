@@ -27,7 +27,11 @@ module.exports = function match(text, query, options) {
     requireMatchAll: false
   });
 
-  text = removeDiacritics(text);
+  var cleanedTextArray = Array.from(text).map(function(x) {
+    return removeDiacritics(x);
+  });
+  var cleanedText = cleanedTextArray.join('');
+
   query = removeDiacritics(query);
 
   return (
@@ -45,27 +49,44 @@ module.exports = function match(text, query, options) {
         var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
         var occurrence, index;
 
-        occurrence = regex.exec(text);
+        occurrence = regex.exec(cleanedText);
         if (options.requireMatchAll && occurrence === null) {
-          text = '';
+          cleanedText = '';
           return [];
         }
 
         while (occurrence) {
           index = occurrence.index;
-          result.push([index, index + wordLen]);
+
+          var cleanedLength = cleanedTextArray
+            .slice(index, index + wordLen)
+            .join('').length;
+          var offset = wordLen - cleanedLength;
+
+          var initialOffset =
+            index - cleanedTextArray.slice(0, index).join('').length;
+          var wordOffset = offset;
+
+          var indexes = [
+            index + initialOffset,
+            index + wordLen + initialOffset + wordOffset
+          ];
+
+          if (indexes[0] !== indexes[1]) {
+            result.push(indexes);
+          }
 
           // Replace what we just found with spaces so we don't find it again.
-          text =
-            text.slice(0, index) +
+          cleanedText =
+            cleanedText.slice(0, index) +
             new Array(wordLen + 1).join(' ') +
-            text.slice(index + wordLen);
+            cleanedText.slice(index + wordLen);
 
           if (!options.findAllOccurrences) {
             break;
           }
 
-          occurrence = regex.exec(text);
+          occurrence = regex.exec(cleanedText);
         }
 
         return result;
