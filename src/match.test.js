@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var match = require('./match');
 
-describe('match', function() {
+describe('match without options', function() {
   it('should highlight at the beginning of a word', function() {
     expect(match('some text', 'te')).to.deep.equal([[5, 7]]);
   });
@@ -10,33 +10,12 @@ describe('match', function() {
     expect(match('some text', 'e')).to.deep.equal([]);
   });
 
-  it('should highlight at the middle of a word', function() {
-    expect(match('some text', 'e', { insideWords: true })).to.deep.equal([
-      [3, 4]
-    ]);
-  });
-
   it('should highlight only the first match by default', function() {
     expect(match('some sweet text', 's')).to.deep.equal([[0, 1]]);
   });
 
   it('should highlight all the matches when query has multiple words', function() {
     expect(match('some sweet text', 's s')).to.deep.equal([[0, 1], [5, 6]]);
-  });
-
-  it('should highlight all the matches at the beginning of a word', function() {
-    expect(
-      match('some sweet text', 's', { findAllOccurrences: true })
-    ).to.deep.equal([[0, 1], [5, 6]]);
-  });
-
-  it('should highlight all the matches index words', function() {
-    expect(
-      match('some sweet text', 'e', {
-        insideWords: true,
-        findAllOccurrences: true
-      })
-    ).to.deep.equal([[3, 4], [7, 8], [8, 9], [12, 13]]);
   });
 
   it("should highlight when case doesn't match", function() {
@@ -86,27 +65,15 @@ describe('match', function() {
     expect(match('some text', 's sweet')).to.deep.equal([[0, 1]]);
   });
 
-  it('should not highlight anything', function() {
-    expect(
-      match('some text', 's sweet', { requireMatchAll: true })
-    ).to.deep.equal([]);
-  });
-
-  it('should highlight all words in query', function() {
-    expect(
-      match('some sweet text', 's sweet', { requireMatchAll: true })
-    ).to.deep.equal([[0, 1], [5, 10]]);
-  });
-
-  it('should adjust indexes per original text typed with diactrics', function() {
+  it('should adjust indexes per original text with diacritics ', function() {
     expect(match('œuvre pompes test', 'pompes')).to.deep.equal([[6, 12]]);
   });
 
-  it('should adjust indexes per original text typed with diactrics', function() {
+  it('should adjust indexes per original text if query typed with diacritics', function() {
     expect(match('œuvre pompes test', 'œuvre')).to.deep.equal([[0, 5]]);
   });
 
-  it('should adjust indexes per original text typed without diacritics', function() {
+  it('should adjust indexes per original text if query typed without diacritics', function() {
     expect(match('œuvre pompes test', 'oeuvre')).to.deep.equal([[0, 5]]);
   });
 
@@ -122,17 +89,60 @@ describe('match', function() {
     expect(match('œuvre', 'o')).to.deep.equal([]);
   });
 
+  it('should match beginning of second word including diacritic character', function() {
+    expect(match('ma sœur', 'soe')).to.deep.equal([[3, 5]]);
+  });
+
+  // This is a little weird, but I think the match should not be interrupted as a user
+  // types the individual characters of the query.
+  it('should not match entire diacritic character in middle of word if part of diacritic is typed', function() {
+    expect(match('ma sœur', 'so')).to.deep.equal([[3, 4]]);
+  });
+});
+
+describe('match with options', function() {
+  it('should highlight at the middle of a word', function() {
+    expect(match('some text', 'e', { insideWords: true })).to.deep.equal([
+      [3, 4]
+    ]);
+  });
+
+  it('should highlight at the end of a word', function() {
+    expect(match('some text', 'me', { insideWords: true })).to.deep.equal([
+      [2, 4]
+    ]);
+  });
+
   it('should match single unicode character inside word', function() {
     expect(match('ma sœur', 'oe', { insideWords: true })).to.deep.equal([
       [4, 5]
     ]);
   });
 
-  it('should match beginning of second word including unicode character', function() {
-    expect(match('ma sœur', 'soe')).to.deep.equal([[3, 5]]);
+  it('should highlight all the matches at the beginning of a word', function() {
+    expect(
+      match('some sweet text', 's', { findAllOccurrences: true })
+    ).to.deep.equal([[0, 1], [5, 6]]);
   });
 
-  it('should not match entire unicode character in middle of word if part of diacritic is typed', function() {
-    expect(match('ma sœur', 'so')).to.deep.equal([[3, 4]]);
+  it('should highlight all the matches index words', function() {
+    expect(
+      match('some sweet text', 'e', {
+        insideWords: true,
+        findAllOccurrences: true
+      })
+    ).to.deep.equal([[3, 4], [7, 8], [8, 9], [12, 13]]);
+  });
+
+  it('should not highlight anything', function() {
+    expect(
+      match('some text', 's sweet', { requireMatchAll: true })
+    ).to.deep.equal([]);
+  });
+
+  it('should highlight all words in query', function() {
+    expect(
+      match('some sweet text', 's sweet', { requireMatchAll: true })
+    ).to.deep.equal([[0, 1], [5, 10]]);
   });
 });
