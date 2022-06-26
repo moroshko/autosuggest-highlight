@@ -145,4 +145,10 @@ describe('match with options', function() {
       match('some sweet text', 's sweet', { requireMatchAll: true })
     ).to.deep.equal([[0, 1], [5, 10]]);
   });
+
+  it('should highlight case-insensitive with cyrillic letters', function() {
+    expect(match('БАЗИЛИК', 'базил', { requireMatchAll: true })).to.deep.equal([
+      [0, 5]
+    ]);
+  });
 });
