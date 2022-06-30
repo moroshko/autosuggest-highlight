@@ -1,8 +1,8 @@
-var expect = require('chai').expect;
-var parse = require('./parse');
+const { expect } = require('chai');
+const parse = require('./parse');
 
-describe('parse', function() {
-  it('should highlight a single partial match', function() {
+describe('parse', () => {
+  it('should highlight a single partial match', () => {
     expect(parse('Hello world', [[0, 4]])).to.deep.equal([
       {
         text: 'Hell',
@@ -15,7 +15,7 @@ describe('parse', function() {
     ]);
   });
 
-  it('should highlight a single complete match', function() {
+  it('should highlight a single complete match', () => {
     expect(parse('Hello world', [[0, 11]])).to.deep.equal([
       {
         text: 'Hello world',
@@ -24,8 +24,13 @@ describe('parse', function() {
     ]);
   });
 
-  it('should highlight multiple non-consecutive matches', function() {
-    expect(parse('Hello world', [[2, 4], [6, 8]])).to.deep.equal([
+  it('should highlight multiple non-consecutive matches', () => {
+    expect(
+      parse('Hello world', [
+        [2, 4],
+        [6, 8]
+      ])
+    ).to.deep.equal([
       {
         text: 'He',
         highlight: false
@@ -49,8 +54,13 @@ describe('parse', function() {
     ]);
   });
 
-  it('should highlight multiple consecutive matches', function() {
-    expect(parse('Hello world', [[2, 4], [4, 8]])).to.deep.equal([
+  it('should highlight multiple consecutive matches', () => {
+    expect(
+      parse('Hello world', [
+        [2, 4],
+        [4, 8]
+      ])
+    ).to.deep.equal([
       {
         text: 'He',
         highlight: false
@@ -70,7 +80,7 @@ describe('parse', function() {
     ]);
   });
 
-  it('should not highlight the text if there are no matches', function() {
+  it('should not highlight the text if there are no matches', () => {
     expect(parse('Hello world', [])).to.deep.equal([
       {
         text: 'Hello world',
@@ -79,7 +89,7 @@ describe('parse', function() {
     ]);
   });
 
-  it('should highlight second word when first word contains œ', function() {
+  it('should highlight second word when first word contains œ', () => {
     expect(parse('œuvre pompes test', [[6, 12]])).to.deep.equal([
       {
         text: 'œuvre ',
@@ -96,7 +106,7 @@ describe('parse', function() {
     ]);
   });
 
-  it('should highlight only first word that contains œ', function() {
+  it('should highlight only first word that contains œ', () => {
     expect(parse('œuvre pompes test', [[0, 5]])).to.deep.equal([
       {
         text: 'œuvre',
