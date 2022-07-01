@@ -5,11 +5,6 @@
 name: Node.js Package
 
 on:
-  push:
-    branches:
-      - "!*"
-    tags:
-      - 'v*'
   release:
     types: [created]
 
