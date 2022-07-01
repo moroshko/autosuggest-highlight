@@ -5,7 +5,8 @@ module.exports = [
       filename: './umd/match/index.js',
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightMatch'
-    }
+    },
+    mode: 'production'
   },
   {
     entry: './parse/index.js',
@@ -13,6 +14,7 @@ module.exports = [
       filename: './umd/parse/index.js',
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightParse'
-    }
+    },
+    mode: 'production'
   }
 ];

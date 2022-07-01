@@ -1,12 +1,12 @@
-var removeDiacritics = require('remove-accents').remove;
+const removeDiacritics = require('remove-accents').remove;
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_special_characters
-var specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
+const specialCharsRegex = /[.*+?^${}()|[\]\\]/g;
 
 // http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.2.6
-var wordCharacterRegex = /[a-z0-9_]/i;
+const wordCharacterRegex = /[a-z0-9_]/i;
 
-var whitespacesRegex = /\s+/;
+const whitespacesRegex = /\s+/;
 
 function escapeRegexCharacters(str) {
   return str.replace(specialCharsRegex, '\\$&');
@@ -14,7 +14,7 @@ function escapeRegexCharacters(str) {
 
 function extend(subject, baseObject) {
   subject = subject || {};
-  Object.keys(subject).forEach(function(key) {
+  Object.keys(subject).forEach((key) => {
     baseObject[key] = !!subject[key];
   });
   return baseObject;
@@ -27,10 +27,8 @@ module.exports = function match(text, query, options) {
     requireMatchAll: false
   });
 
-  var cleanedTextArray = Array.from(text).map(function(x) {
-    return removeDiacritics(x);
-  });
-  var cleanedText = cleanedTextArray.join('');
+  const cleanedTextArray = Array.from(text).map((x) => removeDiacritics(x));
+  let cleanedText = cleanedTextArray.join('');
 
   query = removeDiacritics(query);
 
@@ -39,15 +37,14 @@ module.exports = function match(text, query, options) {
       .trim()
       .split(whitespacesRegex)
       // If query is blank, we'll get empty string here, so let's filter it out.
-      .filter(function(word) {
-        return word.length > 0;
-      })
-      .reduce(function(result, word) {
-        var wordLen = word.length;
-        var prefix =
+      .filter((word) => word.length > 0)
+      .reduce((result, word) => {
+        const wordLen = word.length;
+        const prefix =
           !options.insideWords && wordCharacterRegex.test(word[0]) ? '\\b' : '';
-        var regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
-        var occurrence, index;
+        const regex = new RegExp(prefix + escapeRegexCharacters(word), 'i');
+        let occurrence;
+        let index;
 
         occurrence = regex.exec(cleanedText);
         if (options.requireMatchAll && occurrence === null) {
@@ -58,18 +55,17 @@ module.exports = function match(text, query, options) {
         while (occurrence) {
           index = occurrence.index;
 
-          var cleanedLength = cleanedTextArray
+          const cleanedLength = cleanedTextArray
             .slice(index, index + wordLen)
             .join('').length;
-          var offset = wordLen - cleanedLength;
+          const offset = wordLen - cleanedLength;
 
-          var initialOffset =
+          const initialOffset =
             index - cleanedTextArray.slice(0, index).join('').length;
-          var wordOffset = offset;
 
-          var indexes = [
+          const indexes = [
             index + initialOffset,
-            index + wordLen + initialOffset + wordOffset
+            index + wordLen + initialOffset + offset
           ];
 
           if (indexes[0] !== indexes[1]) {
@@ -91,8 +87,6 @@ module.exports = function match(text, query, options) {
 
         return result;
       }, [])
-      .sort(function(match1, match2) {
-        return match1[0] - match2[0];
-      })
+      .sort((match1, match2) => match1[0] - match2[0])
   );
 };

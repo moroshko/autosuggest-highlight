@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     mocha: true
   },
-  extends: ['eslint:recommended'],
+  extends: ['eslint:recommended', 'airbnb-base', 'prettier'],
   rules: {
     'array-callback-return': 2,
     'brace-style': [2, '1tbs'],
@@ -20,6 +20,7 @@ module.exports = {
     'no-console': 2,
     'no-global-assign': 2,
     'no-multiple-empty-lines': [2, { max: 1 }],
+    'no-param-reassign': 0,
     'no-restricted-properties': [
       2,
       {
