@@ -6,6 +6,14 @@ module.exports = [
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightMatch'
     },
+    module: {
+      rules: [
+        {
+          loader: 'babel-loader'
+        }
+      ]
+    },
+    target: ['browserslist'],
     mode: 'production'
   },
   {
@@ -15,6 +23,14 @@ module.exports = [
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightParse'
     },
+    module: {
+      rules: [
+        {
+          loader: 'babel-loader'
+        }
+      ]
+    },
+    target: ['browserslist'],
     mode: 'production'
   }
 ];
