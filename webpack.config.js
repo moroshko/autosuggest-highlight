@@ -6,9 +6,30 @@ module.exports = [
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightMatch'
     },
+    target: ['web'],
+    mode: 'production'
+  },
+  {
+    entry: './parse/index.js',
+    output: {
+      filename: './umd/parse/index.js',
+      libraryTarget: 'umd',
+      library: 'AutosuggestHighlightParse'
+    },
+    target: ['web'],
+    mode: 'production'
+  },
+  {
+    entry: './match/index.js',
+    output: {
+      filename: './umd/ie11/match/index.js',
+      libraryTarget: 'umd',
+      library: 'AutosuggestHighlightMatch'
+    },
     module: {
       rules: [
         {
+          test: /.js$/,
           loader: 'babel-loader'
         }
       ]
@@ -19,13 +40,14 @@ module.exports = [
   {
     entry: './parse/index.js',
     output: {
-      filename: './umd/parse/index.js',
+      filename: './umd/ie11/parse/index.js',
       libraryTarget: 'umd',
       library: 'AutosuggestHighlightParse'
     },
     module: {
       rules: [
         {
+          test: /.js$/,
           loader: 'babel-loader'
         }
       ]

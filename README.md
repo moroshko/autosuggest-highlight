@@ -168,6 +168,13 @@ var parts = parse('Pretty cool text', [[7, 9], [12, 13]]);
 */
 ```
 
+## Usage with old browsers
+For using this library with old browsers such as IE11 you must change import to
+```js
+var match = require('autosuggest-highlight/ie11/match');
+var parse = require('autosuggest-highlight/ie11/parse');
+```
+
 ## License
 
 [MIT](http://moroshko.mit-license.org)
