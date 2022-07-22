@@ -14,7 +14,7 @@
     "dist": "rimraf match parse && mkdir match parse && cp src/match.js match/index.js && cp src/parse.js parse/index.js",
     "umd": "rimraf umd && webpack",
     "prebuild": "npm run lint && npm test",
-    "build": "npm run dist && npm run umd && cp -R dist/umd/* ..",
+    "build": "npm run dist && npm run umd && cp -R dist/umd/* .",
     "postversion": "git push && git push --tags",
     "prepublish": "npm run build",
     "precommit": "lint-staged"
