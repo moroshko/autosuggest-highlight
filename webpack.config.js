@@ -4,7 +4,8 @@ module.exports = [
     output: {
       filename: './umd/match/index.js',
       libraryTarget: 'umd',
-      library: 'AutosuggestHighlightMatch'
+      library: 'AutosuggestHighlightMatch',
+      globalObject: 'this'
     },
     target: ['web'],
     mode: 'production'
@@ -14,7 +15,8 @@ module.exports = [
     output: {
       filename: './umd/parse/index.js',
       libraryTarget: 'umd',
-      library: 'AutosuggestHighlightParse'
+      library: 'AutosuggestHighlightParse',
+      globalObject: 'this'
     },
     target: ['web'],
     mode: 'production'
@@ -24,7 +26,8 @@ module.exports = [
     output: {
       filename: './umd/ie11/match/index.js',
       libraryTarget: 'umd',
-      library: 'AutosuggestHighlightMatch'
+      library: 'AutosuggestHighlightMatch',
+      globalObject: 'this'
     },
     module: {
       rules: [
@@ -42,7 +45,8 @@ module.exports = [
     output: {
       filename: './umd/ie11/parse/index.js',
       libraryTarget: 'umd',
-      library: 'AutosuggestHighlightParse'
+      library: 'AutosuggestHighlightParse',
+      globalObject: 'this'
     },
     module: {
       rules: [
